@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div>
+            <p class="storeName">mini wallet lab</p>
+            <div>
+                <div>検索</div>
+                <div><a href="">マイページ</a></div>
+                <div><a href="">カート</a></div>
+            </div>                
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">home</a></li>
+                <li><a href="{{url_for('products')}}">products</a></li>
+                <li><a href="">about</a></li>
+                <li><a href="">news</a></li>
+                <li><a href="">store</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+    <h1>購入する</h1>
+
+    <p>＜購入内容＞</p>
+
+    {% for p in cart_items %}
+        <p>ID：{{ p.id }}</p>
+        <p>商品名：{{ p.name }}</p>
+        <p>価格：{{ p.price }}円</p>
+        <p>数量：{{ p.qty }}個</p>
+        <p>小計：{{ p.subtotal }}円</p>
+    {% endfor %}
+
+    <hr>
+    <p>合計金額：{{ total }}円</p>
+
+
+        <form action="/purchase_success" method="post">
+
+            <p>＜注文者情報＞</p>
+
+            <!-- 商品IDと数量 -->
+            {% for p in cart_items %}
+              <input type="hidden" name="product_id" value="{{ p.id }}">
+              <input type="hidden" name="quantity_{{ p.id }}" value="{{ p.qty }}">
+            {% endfor %}
+
+            {% if user_info %}
+
+              <input type="hidden" name="member_id" value="{{ user_info.id }}">
+              <input type="hidden" name="orderer" value="{{ user_info.name }}">
+              <input type="hidden" name="mail" value="{{ user_info.id }}">
+
+              <p>氏名：{{user_info.name}}</p>
+              <p>メールアドレス：{{user_info.id}}</p>
+
+              <p>
+                <label for="tel">電話番号：</label>
+                <input type="text" id="tel" name="tel" value="{{ user_info.tel }}" required>
+              </p>
+
+              <p>＜配送先情報＞</p>
+
+              <p>
+                <label for="zip">郵便番号：</label>
+                <input type="text" id="zip" name="zip" value="{{ user_info.zip }}" required>
+              </p>
+              <p>
+                <label for="address">住所：</label>
+                <input type="text" id="address" name="address1" value="{{ user_info.address1 }}" required>
+              </p>
+              <p>
+                <input type="text" id="address2" name="address2" value="{{ user_info.address2 }}" required placeholder="番地">
+              </p>
+              <p>
+                <input type="text" id="address3" name="address3" value="{{ user_info.address3 }}" placeholder="マンション名以下（任意）">
+              </p>
+              <p>
+                <label for="recipient">宛先者：</label>
+                <input type="text" id="recipient" name="recipient" value="{{ user_info.name }}" required>
+              </p>
+
+            {% else %}
+
+              <input type="hidden" id="member_id" name="member_id" value="">
+
+              <p>
+                <label for="orderer">氏名：</label>
+                <input type="text" id="orderer" name="orderer" value="" required>
+              </p>
+              <p>
+                <label for="mail">メールアドレス：</label>
+                <input type="mail" id="mail" name="mail" value="" required>
+              </p>
+              <p>
+                <label for="tel">電話番号：</label>
+                <input type="text" id="tel" name="tel" value="" required>
+              </p>
+
+              <p>＜配送先情報＞</p>
+
+              <p>
+                <label for="zip">郵便番号：</label>
+                <input type="text" id="zip" name="zip" value="" required>
+              </p>
+              <p>
+                <label for="address">住所：</label>
+                <input type="text" id="address" name="address1" value="" required>
+              </p>
+              <p>
+                <input type="text" id="address2" name="address2" value="" required placeholder="番地">
+              </p>
+              <p>
+                <input type="text" id="address3" name="address3" value="" placeholder="マンション名以下（任意）">
+              </p>
+              <p>
+                <label for="recipient">宛先者：</label>
+                <input type="text" id="recipient" name="recipient" value="" required>
+              </p>
+
+            {% endif %}
+
+            <p>
+              <label for="payment">支払方法：</label>
+              <select id="payment" name="payment">
+                <option value="1">クレジットカード</option>
+                <option value="2">電子決済</option>
+                <option value="3">銀行振込</option>
+              </select>
+            </p>
+
+            <p>
+                <button type="submit" name="btn" value="login">購入する</button>
+            </p>
+        </form>
+
+    </main>
+
+    <footer>
+        <div>
+            <div>
+                <ul>
+                    <li><a href="">お買い物ガイド</a></li>
+                    <li><a href="">特定商取引法について</a></li>
+                    <li><a href="">ご利用規約</a></li>
+                    <li><a href="">プライバシーポリシー</a></li>                    
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li><a href="">会社概要</a></li>
+                    <li><a href="">お問い合わせ</a></li>               
+                </ul>
+            </div>
+        </div>
+        <small>mini wallet lab 2026</small>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINI WALLET Lab - PRODUCTS</title>
+</head>
+<body>
+    <header>
+        <div>
+            <p class="storeName">mini wallet lab</p>
+            <div>
+                <div>検索</div>
+                <div><a href="">マイページ</a></div>
+                <div><a href="">カート</a></div>
+            </div>                
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">home</a></li>
+                <li><a href="{{url_for('products')}}">products</a></li>
+                <li><a href="">about</a></li>
+                <li><a href="">news</a></li>
+                <li><a href="">store</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="breadcrumb">
+        </section>
+        <section class="productDetailSection">
+
+            <h1>商品詳細</h1>
+
+            <form action="/cart" method="GET">
+                <table border="1">
+                    <tr>
+                        <td>商品番号</td>
+                        <td><input type="hidden" name="product_id" value="{{ product.id }}"></td>
+                    </tr>
+                    <tr>
+                        <td>シリーズ名</td>
+                        <td>{{product.series}}</td>
+                    </tr>
+                    <tr>
+                        <td>カラー</td>
+                        <td>{{product.color}}</td>
+                    </tr>
+                    <tr>
+                        <td>販売価格</td>
+                        <td>{{product.price}}</td>
+                    </tr>
+                    <tr>
+                        <td>在庫数</td>
+                        <td>{{product.stock}}</td>
+                    </tr>
+                    <tr>
+                        <td>説明</td>
+                        <td>{{product.caption}}</td>
+                    </tr>
+                    <tr>
+                        <td>数量</td>
+                        <td><input type="number" name="quantity" value="1" min="1" max="{{product.stock}}"></td>
+                    </tr>
+                    <tr>
+                        <td><button type="submit">カートに入れる</button></td>
+                    </tr>
+                </table>
+
+            </form>
+
+
+        </section>
+
+
+
+
+        <section class="snsSection">
+            <div><a href="">X</a></div>
+            <div><a href="">facebook</a></div>
+            <div><a href="">Instagram</a></div>
+        </section>
+    </main>
+    <footer>
+        <div>
+            <div>
+                <ul>
+                    <li><a href="">お買い物ガイド</a></li>
+                    <li><a href="">特定商取引法について</a></li>
+                    <li><a href="">ご利用規約</a></li>
+                    <li><a href="">プライバシーポリシー</a></li>                    
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li><a href="">会社概要</a></li>
+                    <li><a href="">お問い合わせ</a></li>               
+                </ul>
+            </div>
+        </div>
+        <small>mini wallet lab 2026</small>
+    </footer>
+</body>
+</html>
