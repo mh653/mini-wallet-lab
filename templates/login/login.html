@@ -1,0 +1,30 @@
+{% extends "index.html" %}
+
+{% block content %}
+  
+    <main>
+    <h1>ログイン</h1>
+        <form action="/login_success" method="post">
+            <p>
+                <label for="user_id">ユーザID(メールアドレス)：</label>
+                <input type="text" id="user_id" name="user_id" required>
+            </p>
+            <p>
+                <label for="password">パスワード：</label>
+                <input type="password" id="password" name="password" required>
+            </p>
+            <p>
+                <button type="submit" name="btn" value="login">ログイン</button>
+            </p>
+        </form>
+        <form action="/member_registration" method="get">
+            <p>
+                <button type="submit" name="btn" value="login">新規会員登録</button>
+            </p>
+        </form>
+    </main>
+
+{% endblock %}
+
+
+

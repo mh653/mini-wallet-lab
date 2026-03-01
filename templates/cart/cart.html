@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <main>
+
+        <section>
+
+            <h1>カート</h1>
+
+            {% if cart_items %}
+            <!-- 空配列ならfalse -->
+                <p>カートに入っています。</p>
+
+                {% for p in cart_items %}
+                    <p>ID：{{ p.id }}</p>
+                    <p>商品名：{{ p.name }}</p>
+                    <p>価格：{{ p.price }}円</p>
+                    <p>数量：{{ p.qty }}個</p>
+                    <p>小計：{{ p.subtotal }}円</p>
+                {% endfor %}
+
+                <hr>
+                <p>合計金額：{{ total }}円</p>
+
+                {% if user_id %}
+
+                    <form action="/purchase" method="get">
+                        <button type="submit" name="btn" value="purchase">購入する</button>
+                    </form>
+
+                {% else %}
+
+                    <form action="/login" method="get">
+                        <button type="submit" name="btn" value="login_purchase">ログインして購入する</button>
+                    </form>
+
+                    <form action="/purchase" method="get">
+                        <button type="submit" name="btn" value="purchase">ログインせずに購入する</button>
+                    </form>
+
+                {% endif %}
+
+
+            {% else %}
+                <p>カートは空です</p>
+            {% endif %}
+
+        </section>
+
+    </main>
+{% endblock %}
