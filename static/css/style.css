@@ -93,6 +93,12 @@ select {
 .upperCase {
   text-transform: uppercase;
 }
+button:hover {
+  opacity: 0.5;
+}
+a:hover {
+  opacity: 0.5;
+}
 
 
 /* ヘッダー */
@@ -104,6 +110,7 @@ header {
   right: 0;
   display: flex;
   flex-direction: column;
+  z-index: 100;
 }
 
 header .top {
@@ -282,21 +289,80 @@ footer small {
 }
 
 /* PRODUCTS */
+.selectBar {
+  padding-top: 80px;
+  display: flex;
+  gap: 20px;
+}
+.selector {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.seriesFilter {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.seriesFilter:hover {
+  opacity: 0.5;
+}
+.colorFilter {
+  display: block;
+  width: 15px;
+  height: 15px;
+  margin-bottom: -1px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.colorFilter:hover {
+  opacity: 0.5;
+}
+.yellow {
+  background-color: #FFE100;
+}
+.Pink {
+  background-color: #FF00FB;
+}
+.Blue {
+  background-color: #00AAFF;
+}
+.Purple {
+  background-color: #893BC5;
+}
+.Green {
+  background-color: #179641;
+}
+.Black {
+  background-color: #000000;
+}
+.Brown {
+  background-color: #963D17;
+}
 .productsSection {
-  padding-top: 100px;
+  padding-top: 40px;
   padding-bottom: 250px;
   display: grid;
   grid-template-columns: repeat(3,300px);
   gap: 50px;
+}
+.productWrapper a:hover {
+  opacity: 1;
 }
 .productThumb {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.imageWraper {
+  overflow: hidden;
+}
 .productThumb img {
   width: 300px;
   height: auto;
+  transition: transform 0.4s ease;
+}
+.productThumb img:hover {
+  transform: scale(1.05);
 }
 .productThumb .series {
   margin-top: 5px;
@@ -313,8 +379,20 @@ footer small {
 }
 
 /* PRODUCTS_detail */
+.backBtn {
+  padding-top: 80px;
+  display: flex;
+  gap: 20px;
+}
+.backBtn:hover {
+  opacity: 0.5;
+}
+.backBtn p {
+  text-decoration: underline;
+  cursor: pointer;
+}
 .productDetailSection {
-  padding-top: 100px;
+  padding-top: 40px;
   padding-bottom: 250px;
   display: flex;
   gap: 120px;
@@ -408,7 +486,6 @@ footer small {
 }
 .loginInputs p {
   width: 550px;
-  /* margin: 0 auto; */
   display: grid;
   grid-template-columns: 40% 60%;
 }
@@ -448,7 +525,7 @@ footer small {
 }
 .memberInfo {
   width: 300px;
-  padding-bottom: 40px;
+  padding-bottom: 70px;
   display: grid;
   grid-template-columns: 150px 150px;
   gap: 10px;
@@ -471,8 +548,6 @@ footer small {
   text-align: right;
 }
 
-
-
 /* ログイン成功画面、ログアウト画面、購入完了画面 */
 .result {
   width: 400px;
@@ -494,7 +569,11 @@ footer small {
   font-size: 14px;
 }
 
-
+/* 準備中表示 */
+.preparation {
+  text-align: center;
+  padding-top: 50px;
+}
 
 
 
