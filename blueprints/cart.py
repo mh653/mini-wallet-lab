@@ -113,10 +113,54 @@ def cart():
 
     total = sum(item["subtotal"] for item in cart_items)
 
+    #商品情報をテンプレートに渡す
+    return render_template('cart/cart.html',cart_items=cart_items,total=total,user_id=user_id)
+
+    # #レスポンスオブジェクトを作成し、商品情報をテンプレートに渡す
+    # response = make_response(render_template('cart/cart.html',cart_items=cart_items,total=total,user_id=user_id))
+    # #レスポンスオブジェクトを返す
+    # return response
+
+# ==============================
+# カート削除('/remove_from_cart')
+# ==============================
+@cart_bp.route('/remove_from_cart')
+def remove_from_cart():
+
+    #cookieからカート情報を取得。存在しない場合はNoneが格納される
+    cart_item = request.cookies.get('cart_item')
+
+    print(cart_item)
+
+    #商品情報を取得
+    product_id = request.args.get('product_id')
+    print(product_id)
+
+    cart_dict = {}
+
+    # カートが既にある場合
+    if cart_item:
+        items = cart_item.split(",")
+        for item in items:
+            pid, qty = item.split(":")
+            cart_dict[pid] = int(qty)
+
+    print(cart_dict)
+
+    # カートから削除
+    if product_id in cart_dict:
+        del cart_dict[product_id]
+
+    # 文字列に戻す
+    new_cart = ",".join([f"{pid}:{qty}" for pid, qty in cart_dict.items()])
+
     #レスポンスオブジェクトを作成し、商品情報をテンプレートに渡す
-    response = make_response(render_template('cart/cart.html',cart_items=cart_items,total=total,user_id=user_id))
+    response = make_response(redirect('/cart'))
+    #商品情報をCookieに保存
+    response.set_cookie('cart_item',new_cart,max_age=60*60*24*1)   #1日間有効
     #レスポンスオブジェクトを返す
     return response
+
 
 # ==============================
 # 購入画面表示('/purchase')
@@ -196,25 +240,23 @@ def purchase():
     cur = con.cursor(dictionary=True)
     cur.execute(sql)
     user_info = cur.fetchone() #検索結果を取得
-    cur.close
-    con.close #コネクション
+    cur.close()
+    con.close() #コネクション
     
     if user_info is None:
         err_msg = "ユーザIDが存在しません"
         return render_template('pages/error.html',err_msg = err_msg)
 
     #レスポンスオブジェクトを作成し、商品情報をテンプレートに渡す
-    response = make_response(render_template('/cart/purchase.html',cart_items=cart_items,total=total,user_info=user_info))
+    response = make_response(render_template('cart/purchase.html',cart_items=cart_items,total=total,user_info=user_info))
     
     return response
 
 # ==============================
-# 購入完了画面表示('/purchase_success')
-# 
-# ※現状、リロードする度購入されてしまうのでこちらも処理を分けないといけない
+# 購入処理('/add_purchase')
 # ==============================
-@cart_bp.route('/purchase_success',methods=["POST"])
-def purchase_success():
+@cart_bp.route('/add_purchase',methods=["POST"])
+def add_purchase():
     
     #フォームから取得
     member_id = request.form.get('member_id')
@@ -274,6 +316,12 @@ def purchase_success():
             SET stock = stock - {quantity}
             WHERE id = {pid};
         """
+        # sql_stock = f"""
+        #     UPDATE t_product
+        #     SET stock = stock - {quantity}
+        #     WHERE id = {pid}
+        #     AND stock >= {quantity};
+        # """
         cur.execute(sql_stock)
 
     con.commit()
@@ -282,12 +330,19 @@ def purchase_success():
     cur.close()
     con.close()#コネクション
 
-    #レスポンスオブジェクトを作成し、商品情報をテンプレートに渡す
+    #レスポンスオブジェクトを作成し、購入完了画面の表示関数にリダイレクト
     # カートは空にする
-    response = make_response(render_template('cart/purchase_success.html'))
+    response = make_response(redirect('/purchase_success'))
     response.delete_cookie('cart_item')
     return response
 
+# ==============================
+# 購入完了画面表示('/purchase_success')
+# ==============================
+@cart_bp.route('/purchase_success')
+def purchase_success():
+    # 購入完了画面を表示
+    return render_template('cart/purchase_success.html')
 
 # ==============================
 # DB接続

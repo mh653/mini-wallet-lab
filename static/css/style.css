@@ -4,7 +4,6 @@
   --black: #000;
   --gray1: #d9d9d9;
   --gray2: #aaa;
-
 }
 body {
   font-family: "Noto Sans JP", sans-serif;
@@ -94,6 +93,9 @@ select {
   text-transform: uppercase;
 }
 button:hover {
+  opacity: 0.5;
+}
+button[disabled] {
   opacity: 0.5;
 }
 a:hover {
@@ -447,13 +449,17 @@ footer small {
 }
 .cartItem {
   display: grid;
-  grid-template-columns: 40% 30% 30%;
+  grid-template-columns: 40% 20% 20% 20%;
   grid-auto-rows: 50px;
+  align-items: center;
 }
 .cartItem .quantity {
   text-align: right;
 }
 .cartItem .subtotal {
+  text-align: right;
+}
+.cartItem .remove {
   text-align: right;
 }
 .total {
@@ -573,6 +579,15 @@ footer small {
 .preparation {
   text-align: center;
   padding-top: 50px;
+}
+
+/* エラー画面 */
+.errorText {
+  text-align: center;
+  padding-bottom: 80px;
+}
+.errorBackBtn {
+  text-align: center;
 }
 
 

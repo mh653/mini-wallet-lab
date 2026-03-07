@@ -24,6 +24,12 @@
                             </form> -->
 
                             <p class="subtotal">￥{{ "{:,}".format(p.subtotal) }}</p>
+
+                            <form action="/remove_from_cart" method="get" class="remove">
+                                <input type="hidden" name="product_id" value="{{ p.id }}">
+                                <button type="submit">削除</button>
+                            </form>
+
                         </div>
                     {% endfor %}
                     <hr>

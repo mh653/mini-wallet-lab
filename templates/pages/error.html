@@ -3,10 +3,10 @@
 {% block content %}
 <main>
     <h1>エラー</h1>
-    <p>{{err_msg}}</p>
-    <form action="/" method="get">
-        <button type="submit" name="btn" value="back">戻る</button>
-    </form>    
+    <p class="errorText">{{err_msg}}</p>
+    <div class="errorBackBtn">
+        <button  onclick="history.back()">戻る</button>
+    </div>    
 </main>
 
 {% endblock %}
