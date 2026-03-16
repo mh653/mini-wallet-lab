@@ -56,9 +56,9 @@
             <li><a href="{{url_for('admin.admin_order')}}">注文情報</a></li>
             <!-- app.py の @app.route の下にある products という関数を url_for に指定すると、
                     その関数を持つ @app.route にルーティングしてくれる。 -->
-            <li><a href="{{url_for('pages.about')}}">商品情報</a></li>
-            <li><a href="{{url_for('pages.news')}}">ユーザ情報</a></li>
-            <li><a href="{{url_for('pages.store')}}">管理者情報</a></li>
+            <li><a href="{{url_for('admin.admin_products')}}">商品情報</a></li>
+            <li><a href="{{url_for('admin.admin_member_info')}}">会員情報</a></li>
+            <li><a href="{{url_for('admin.admin_staff_info')}}">管理者情報</a></li>
           </ul>
         </nav>
       </div>

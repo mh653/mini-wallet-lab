@@ -1,0 +1,36 @@
+{% extends "admin/admin_layout.html" %}
+{% block content %}
+
+<main>
+  <h1>商品情報</h1>
+
+  <div>
+    <button>新規登録画面へ</button>
+  </div>
+
+  <div>
+    <table>
+      <tr>
+        <th>商品ID</th>
+        <th>商品名</th>
+        <th>価格</th>
+        <th>在庫数</th>
+        <th>状態</th>
+        <th>編集</th>
+      </tr>
+
+      {% for p in products %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.price }}</td>
+        <td>{{ p.stock }}</td>
+        <td>{{ p.is_active_str }}</td>
+        <td><button>編集</button></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</main>
+
+{% endblock %}

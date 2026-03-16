@@ -205,6 +205,154 @@ def admin_order_detail(order_id):
     total=total
   )
 
+# ================================================
+# 注文ステータス更新('/admin_update_processing')
+# ================================================
+@admin_bp.route("/admin_update_processing", methods=["POST"])
+def admin_update_processing():
+
+  # フォームから取得
+  order_id = request.form.get("order_id")
+  processing = request.form.get("processing")
+
+  # SQL作成
+  sql = """
+    UPDATE t_order
+    SET processing = %s
+    WHERE id = %s;
+  """
+  con = connect_db()  # コネクション
+  cur = con.cursor(dictionary=True)
+  cur.execute(sql, (processing, order_id))
+  con.commit()
+  cur.close()
+  con.close()  # コネクション  
+
+  response = make_response(redirect("/admin_order"))
+  return response
+
+# ================================================
+# 会員情報画面表示('/admin_member_info')
+# ================================================
+@admin_bp.route("/admin_member_info")
+def admin_member_info():
+
+  # SQL作成
+  sql = """
+    SELECT *
+    FROM t_member
+  """
+  con = connect_db()  # コネクション
+  cur = con.cursor(dictionary=True)
+  cur.execute(sql)
+  member_info = cur.fetchall()
+  cur.close()
+  con.close()  # コネクション  
+
+  for member in member_info:
+    # 生年月日
+    member["birthday_str"] = member["birthday"].strftime("%Y年%#m月%#d日")
+    # 性別
+    gender_map = {1: "男性", 2: "女性", 3: "その他"}
+    member["gender_str"] = gender_map.get(member["gender"], "未設定")
+    # メルマガ
+    m_flag_map = {0: "受信しない", 1: "受信する"}
+    member["m_flag_str"] = m_flag_map.get(member["m_flag"], "未設定")
+
+  # 会員情報をテンプレートに渡す
+  return render_template(
+    "admin/admin_member_info.html", 
+    member_info=member_info
+  )
+
+# ================================================
+# 管理者情報画面表示('/admin_staff_info')
+# ================================================
+@admin_bp.route("/admin_staff_info")
+def admin_staff_info():
+
+  # SQL作成
+  sql = """
+    SELECT id,name
+    FROM t_admin
+  """
+  con = connect_db()  # コネクション
+  cur = con.cursor(dictionary=True)
+  cur.execute(sql)
+  staff_info = cur.fetchall()
+  cur.close()
+  con.close()  # コネクション  
+
+  # 会員情報をテンプレートに渡す
+  return render_template(
+    "admin/admin_staff_info.html", 
+    staff_info=staff_info
+  )
+
+# ================================================
+# 新規管理者登録('/admin_add_staff')
+# ================================================
+@admin_bp.route("/admin_add_staff", methods=["POST"])
+def admin_add_staff():
+
+  # フォームから取得
+  staff_name = request.form.get("staff_name")
+  staff_id = request.form.get("staff_id")
+  password = request.form.get("pass")
+  pass_confirm = request.form.get("pass_confirm")
+
+  # pass一致チェック
+  if password != pass_confirm:
+      err_msg = "パスワードが一致しません"
+      return render_template('pages/error.html',err_msg = err_msg)
+
+  # SQL作成
+  sql = """
+    INSERT INTO t_admin(id, pass, name, authority)
+    VALUES (%s, %s, %s, %s);
+  """
+
+  con = connect_db()  # コネクション
+  cur = con.cursor(dictionary=True)
+  cur.execute(sql,(staff_id,password,staff_name,1))
+  con.commit()  # コネクション
+  cur.close()
+  con.close()  # コネクション  
+
+  response = make_response(redirect("/admin_staff_info"))
+  return response
+
+# ================================================
+# 商品情報画面表示('/admin_products')
+# ================================================
+@admin_bp.route("/admin_products")
+def admin_products():
+
+  # SQL作成
+  sql = """
+    SELECT *
+    FROM t_product
+    ORDER BY id DESC
+  """
+  con = connect_db()  # コネクション
+  cur = con.cursor(dictionary=True)
+  cur.execute(sql)
+  products = cur.fetchall()
+  cur.close()
+  con.close()  # コネクション  
+
+  for product in products:
+    # 状態
+    is_active_map = {1: "公開", 0: "非公開"}
+    product["is_active_str"] = is_active_map.get(product["is_active"], "未設定")
+
+
+  # 会員情報をテンプレートに渡す
+  return render_template(
+    "admin/admin_products.html", 
+    products=products
+  )
+
 # ==============================
 # DB接続
 # ==============================

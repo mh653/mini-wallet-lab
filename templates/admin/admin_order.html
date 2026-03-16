@@ -9,6 +9,7 @@
     <p>注文済み</p>
     <p>発送済み</p>
     <p>キャンセル</p>
+    <p>全件表示</p>
   </div>
 
   <div>
@@ -19,19 +20,19 @@
         <th>注文者</th>
         <th>支払方法</th>
         <th>状態</th>
-        <th>注文明細</th>
-        <th>送り状</th>
+        <th>注文明細(出荷指示書)</th>
       </tr>
 
       {% for o in order %}
       <tr>
         <td>{{ o.id }}</td>
         <td>{{ o.order_date }}</td>
-        <td>{{ o.orderer }}</td>
+        <td>{{ o.orderer }}　様</td>
         <td>{{ o.payment_str }}</td>
         <td>
-          <form action="/update_prosess" method="post">
-            <select name="prosessing">
+          <form action="/admin_update_processing" method="post">
+            <input type="hidden" value="{{ o.id }}" name="order_id"/>
+            <select name="processing">
               <option value="1" {% if o.processing == 1 %}selected{% endif %}>受注処理待ち</option>
               <option value="2" {% if o.processing == 2 %}selected{% endif %}>発送待ち</option>
               <option value="3" {% if o.processing == 3 %}selected{% endif %}>完了</option>
@@ -42,11 +43,6 @@
         </td>
         <td>
           <a href="{{url_for('admin.admin_order_detail', order_id=o.id)}}" target="_blank">表示</a>
-          <!-- <button>表示</button> -->
-          <button>印刷</button>
-        </td>
-        <td>
-          {% if o.processing == 1 %}<button>印刷</button>{% endif %}
         </td>
       </tr>
       {% endfor %}

@@ -1,5 +1,10 @@
 <main>
-  <h1>ご注文明細書</h1>
+  <div>
+    <button>印刷</button>
+    <button>送り状を印刷</button>
+  </div>
+
+  <h1>注文明細（出荷指示書）</h1>
   <hr>
 
   <div>
@@ -9,11 +14,11 @@
         <td>{{ order.id }}</td>
       </tr>
       <tr>
-        <th>ご注文日：</th>
+        <th>注文日：</th>
         <td>{{ order.order_date }}</td>
       </tr>
       <tr>
-        <th>お支払方法：</th>
+        <th>支払方法：</th>
         <td>{{ order.payment_str }}</td>
       </tr>
     </table>
@@ -21,11 +26,11 @@
     <h2>注文者情報</h2>
     <table>
       <tr>
-        <th>ご注文者：</th>
+        <th>注文者：</th>
         <td>{{ order.orderer }}　様</td>
       </tr>
       <tr>
-        <th>会員ID：</th>
+        <th>ユーザID：</th>
         <td>{{ order.member_id }}</td>
       </tr>
       <tr>
@@ -59,7 +64,7 @@
 
   <hr>
   <div>
-    <h2>ご注文明細</h2>
+    <h2>購入内容</h2>
     <table>
       <tr>
         <th>商品番号</th>
