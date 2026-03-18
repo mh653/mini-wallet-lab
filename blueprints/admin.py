@@ -353,6 +353,46 @@ def admin_products():
     products=products
   )
 
+# ================================================
+# 商品登録画面表示('/admin_product_add')
+# ================================================
+@admin_bp.route("/admin_product_add")
+def admin_product_add():
+
+  # 会員情報をテンプレートに渡す
+  return render_template(
+    "admin/admin_product_add.html"
+  )
+
+# ================================================
+# 商品編集画面表示('/admin_product_edit')
+# ================================================
+@admin_bp.route("/admin_product_edit/<int:product_id>")
+def admin_product_edit(product_id):
+
+  # SQL作成
+  sql = """
+    SELECT *
+    FROM t_product
+    WHERE id = %s;
+  """
+  con = connect_db()  # コネクション
+  cur = con.cursor(dictionary=True)
+  cur.execute(sql, (product_id,))
+  product = cur.fetchone()
+  cur.close()
+  con.close()  # コネクション  
+
+  product["series_id"] = int(product["series_id"])
+  product["color_id"] = int(product["color_id"])
+  product["is_active"] = int(product["is_active"])
+
+  # 会員情報をテンプレートに渡す
+  return render_template(
+    "admin/admin_product_edit.html", 
+    product=product
+  )
+
 # ==============================
 # DB接続
 # ==============================

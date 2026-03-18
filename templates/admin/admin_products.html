@@ -5,7 +5,9 @@
   <h1>商品情報</h1>
 
   <div>
-    <button>新規登録画面へ</button>
+    <a href="{{url_for('admin.admin_product_add')}}">
+      <button>新規登録</button>
+    </a>
   </div>
 
   <div>
@@ -26,7 +28,11 @@
         <td>{{ p.price }}</td>
         <td>{{ p.stock }}</td>
         <td>{{ p.is_active_str }}</td>
-        <td><button>編集</button></td>
+        <td>
+          <a href="{{url_for('admin.admin_product_edit', product_id=p.id)}}">
+            <button>編集</button>
+          </a>
+        </td>
       </tr>
       {% endfor %}
     </table>
