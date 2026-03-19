@@ -558,7 +558,43 @@ def admin_product_update():
   con.close()  # コネクション
 
   # 次のページ専用の一時メッセージ
-  flash("商品情報を更新しました")
+  flash("商品情報を変更しました")
+  # リダイレクト
+  response = make_response(redirect("/admin_products"))
+  return response
+
+# ================================================
+# 商品削除処理('/admin_product_delete')
+# ================================================
+@admin_bp.route("/admin_product_delete", methods=["POST"])
+def admin_product_delete():
+
+  product_id = request.form.get("product_id")
+
+  # SELECTを作成
+  sql = """
+  DELETE FROM t_product
+  WHERE id=%s
+  """
+
+  # DB接続からSQL文の発行、commit処理、DB切断
+  con = connect_db()  # コネクション
+  cur = con.cursor()
+  cur.execute(sql,(product_id,))
+
+  # 画像削除
+  UPLOAD_FOLDER = 'static/images/products'
+  old_files = glob.glob(os.path.join(UPLOAD_FOLDER, str(product_id) + ".*"))
+  for file in old_files:
+    if os.path.exists(file):
+      os.remove(file)
+
+  con.commit()  # コネクション
+  cur.close()
+  con.close()  # コネクション
+
+  # 次のページ専用の一時メッセージ
+  flash("商品を削除しました")
   # リダイレクト
   response = make_response(redirect("/admin_products"))
   return response

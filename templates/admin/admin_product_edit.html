@@ -99,9 +99,9 @@
 
 
   <div>
-    <form action="">
+    <form action="/admin_product_delete" method="post">
       <input type="hidden" value="{{ product.id }}" name="product_id">
-      <button type="submit">削除</button>
+      <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
     </form>
   </div>
 
