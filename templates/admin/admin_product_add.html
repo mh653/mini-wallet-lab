@@ -8,27 +8,30 @@
     <button onclick="history.back()">戻る</button>
   </div>
 
-  <form action="" method="post">
+  <form action="/admin_product_add_insert" method="post" enctype="multipart/form-data">
+    <!-- データを符号化（エンコード）してサーバーへ送信する。
+     通常のテキストデータとは異なり、バイナリデータ（画像やPDFなど）を分割して送信し、サーバー側が正しく受け取れる形式にする。  -->
 
     <div>
+      <p>*は入力必須</p>
+      
       <table>
         <tr>
           <th>商品ID</th>
           <td><p>自動登録</p></td>
         </tr>
         <tr>
-          <th>商品名</th>
-          <td><input type="text" name="name"></td>
+          <th>商品名*</th>
+          <td><input type="text" name="name" required></td>
         </tr>
         <tr>
-          <th>価格</th>
-          <td><input type="number" name="price"></td>
+          <th>価格*</th>
+          <td><input type="number" name="price" required></td>
         </tr>
         <tr>
           <th>シリーズ</th>
           <td>
-            <select name="series" id="series">
-              <option value="0">選択してください</option>
+            <select name="series_id" id="series_id">
               <option value="1">Just Day</option>
               <option value="2">Someday</option>
             </select>
@@ -37,8 +40,7 @@
         <tr>
           <th>カラー</th>
           <td>
-            <select name="color" id="color">
-              <option value="0">選択してください</option>
+            <select name="color_id" id="color_id">
               <option value="1">Yellow</option>
               <option value="2">Pink</option>
               <option value="3">Blue</option>
@@ -50,33 +52,33 @@
           </td>
         </tr>
         <tr>
-          <th>カラー（詳細）</th>
-          <td><input type="text"></td>
+          <th>カラー（詳細）*</th>
+          <td><input type="text" name="color_detail"></td>
         </tr>
         <tr>
           <th>商品説明</th>
           <td><textarea name="caption"></textarea></td>
         </tr>
         <tr>
-          <th>在庫数</th>
-          <td><input type="number" name="stock"></td>
+          <th>在庫数*</th>
+          <td><input type="number" name="stock" required></td>
         </tr>
         <tr>
-          <th>商品画像</th>
-          <td><input type="file" name="imgFile"></td>
+          <th>商品画像*</th>
+          <td><input type="file" name="img_file" id="img_file" accept="image/*" required></td>
         </tr>
         <tr>
           <th>画像プレビュー</th>
-          <td><p>画像がありません</p></td>
+          <td><img id="img_preview" src="" width="440"></td>
         </tr>
         <tr>
           <th>検索キーワード</th>
-          <td><textarea name="searchKey"></textarea></td>
+          <td><textarea name="search_key"></textarea></td>
         </tr>
         <tr>
           <th>状態</th>
           <td>
-            <select name="isActive" id="isActive">
+            <select name="is_active" id="is_active">
               <option value="0">非公開</option>
               <option value="1">公開</option>
             </select>

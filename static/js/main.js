@@ -1,5 +1,7 @@
 console.log("main.js loaded");
 
+// ユーザ側の商品絞り込み
+
 function filterSeries(series) {
   console.log("test");
 
@@ -36,8 +38,24 @@ function toggleInvisible() {
   searchBox.classList.toggle("invisible");
 }
 
+
 // ローディング
+
 window.addEventListener("load", function () {
   const loading = document.getElementById("loading");
   loading.style.display = "none";
 });
+
+
+// 管理者側の登録商品画像プレビュー
+
+document.getElementById("img_file").addEventListener("change", function(e){
+  const file = e.target.files[0]
+  if(file){
+    const reader = new FileReader()
+    reader.onload = function(event){
+      document.getElementById("img_preview").src = event.target.result
+    }
+    reader.readAsDataURL(file)
+  }
+})

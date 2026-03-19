@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, make_response, redirect
 from datetime import datetime
 import mysql.connector
+import os
+from flask import flash
 
 # Blueprint名はadmin
 admin_bp = Blueprint("admin", __name__)
@@ -359,10 +361,89 @@ def admin_products():
 @admin_bp.route("/admin_product_add")
 def admin_product_add():
 
-  # 会員情報をテンプレートに渡す
+  # ページを表示
   return render_template(
     "admin/admin_product_add.html"
   )
+
+# ================================================
+# 商品登録処理('/admin_product_add_insert')
+# ================================================
+@admin_bp.route("/admin_product_add_insert", methods=["POST"])
+def admin_product_add_insert():
+
+  name = request.form.get("name")
+  price = request.form.get("price")
+  series_id = request.form.get("series_id")
+  color_id = request.form.get("color_id")
+  color_detail = request.form.get("color_detail")
+  caption = request.form.get("caption")
+  stock = request.form.get("stock")
+  img_file = request.files['img_file']
+  image_path = ""
+  search_key = request.form.get("search_key")
+  is_active = request.form.get("is_active")
+
+  # SELECTを作成
+  sql = """
+  INSERT INTO t_product(
+    name,
+    price,
+    series_id,
+    color_id,
+    color_detail,
+    caption,
+    stock,
+    image_path,
+    search_key,
+    is_active
+  )
+  VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+  """
+
+  data = (
+    name,
+    price,
+    series_id,
+    color_id,
+    color_detail,
+    caption,
+    stock,
+    image_path,
+    search_key,
+    is_active
+  )
+
+  # DB接続からSQL文の発行、commit処理、DB切断
+  con = connect_db()  # コネクション
+  cur = con.cursor()
+  cur.execute(sql, data)
+
+  # 画像の登録
+  UPLOAD_FOLDER = 'static/images/products'
+  product_id = cur.lastrowid #直前のINSERT操作で生成された主キーの値を返すカーソルのプロパティ
+  ext = os.path.splitext(img_file.filename)[1].lower() # 拡張子を取得
+  filename = str(product_id) + ext
+  path = os.path.join(UPLOAD_FOLDER, filename) # OSによるpathの区切り文字の違いを補完
+  img_file.save(path)
+  image_path = "images/products/" + filename
+
+  sql = """
+  UPDATE t_product
+  SET image_path=%s
+  WHERE id=%s
+  """
+  cur.execute(sql,(image_path,product_id))
+
+  con.commit()  # コネクション
+  cur.close()
+  con.close()  # コネクション
+
+  # 次のページ専用の一時メッセージ
+  flash("商品を登録しました")
+  # リダイレクト
+  response = make_response(redirect("/admin_products"))
+  return response
 
 # ================================================
 # 商品編集画面表示('/admin_product_edit')
@@ -387,7 +468,7 @@ def admin_product_edit(product_id):
   product["color_id"] = int(product["color_id"])
   product["is_active"] = int(product["is_active"])
 
-  # 会員情報をテンプレートに渡す
+  # ページを表示
   return render_template(
     "admin/admin_product_edit.html", 
     product=product

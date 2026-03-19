@@ -10,6 +10,10 @@ from blueprints.admin import admin_bp
 
 app = Flask(__name__)
 
+# セッションデータを暗号化するための鍵
+# Flash用
+app.secret_key = "secret"
+
 # blueprintsを登録
 app.register_blueprint(pages_bp)
 app.register_blueprint(login_bp)
