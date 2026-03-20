@@ -11,8 +11,6 @@
   <form action="/admin_product_update" method="post" enctype="multipart/form-data">
 
     <div>
-      <p>*は入力必須</p>
-
       <table>
         <tr>
           <th>商品ID</th>
@@ -22,11 +20,11 @@
           </td>
         </tr>
         <tr>
-          <th>商品名*</th>
+          <th>商品名</th>
           <td><input type="text" name="name" value="{{ product.name }}" required></td>
         </tr>
         <tr>
-          <th>価格*</th>
+          <th>価格</th>
           <td><input type="number" name="price" value="{{ product.price }}" required></td>
         </tr>
         <tr>
@@ -53,7 +51,7 @@
           </td>
         </tr>
         <tr>
-          <th>カラー（詳細）*</th>
+          <th>カラー詳細</th>
           <td><input type="text" name="color_detail" value="{{ product.color_detail }}" required></td>
         </tr>
         <tr>
@@ -61,7 +59,7 @@
           <td><textarea name="caption">{{ product.caption }}</textarea></td>
         </tr>
         <tr>
-          <th>在庫数*</th>
+          <th>在庫数</th>
           <td><input type="number" name="stock" value="{{ product.stock }}" min="0" required></td>
         </tr>
         <tr>
@@ -72,11 +70,14 @@
           </td>
         </tr>
         <tr>
-          <th>画像差替え</th>
-          <td><input type="file" name="img_file" id="img_file" accept="image/*"></td>
+          <th></th>
+          <td>
+            <input type="file" name="img_file" id="img_file" accept="image/*">
+            <p>※画像を差し替える場合は選択してください</p>
+          </td>
         </tr>
         <tr>
-          <th>検索キーワード</th>
+          <th>検索キーワード（任意）</th>
           <td><textarea name="search_key">{{ product.search_key }}</textarea></td>
         </tr>
         <tr>

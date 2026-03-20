@@ -13,19 +13,17 @@
      通常のテキストデータとは異なり、バイナリデータ（画像やPDFなど）を分割して送信し、サーバー側が正しく受け取れる形式にする。  -->
 
     <div>
-      <p>*は入力必須</p>
-
       <table>
         <tr>
           <th>商品ID</th>
           <td><p>自動登録</p></td>
         </tr>
         <tr>
-          <th>商品名*</th>
+          <th>商品名</th>
           <td><input type="text" name="name" required></td>
         </tr>
         <tr>
-          <th>価格*</th>
+          <th>価格</th>
           <td><input type="number" name="price" required></td>
         </tr>
         <tr>
@@ -52,19 +50,19 @@
           </td>
         </tr>
         <tr>
-          <th>カラー（詳細）*</th>
+          <th>カラー詳細</th>
           <td><input type="text" name="color_detail"></td>
         </tr>
         <tr>
           <th>商品説明</th>
-          <td><textarea name="caption"></textarea></td>
+          <td><textarea name="caption" required></textarea></td>
         </tr>
         <tr>
-          <th>在庫数*</th>
+          <th>在庫数</th>
           <td><input type="number" name="stock" min="0" required></td>
         </tr>
         <tr>
-          <th>商品画像*</th>
+          <th>商品画像</th>
           <td><input type="file" name="img_file" id="img_file" accept="image/*" required></td>
         </tr>
         <tr>
@@ -72,7 +70,7 @@
           <td><img id="img_preview" src="" width="440" style="display:none;"></td>
         </tr>
         <tr>
-          <th>検索キーワード</th>
+          <th>検索キーワード（任意）</th>
           <td><textarea name="search_key"></textarea></td>
         </tr>
         <tr>

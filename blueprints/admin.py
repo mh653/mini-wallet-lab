@@ -377,7 +377,7 @@ def admin_staff_edit(staff_id):
 
   # SQL作成
   sql = """
-    SELECT id,name
+    SELECT id,name,pass
     FROM t_admin
     WHERE id = %s;
   """
@@ -405,44 +405,42 @@ def admin_staff_update():
   staff_name = request.form.get("staff_name")
   password = request.form.get("pass")
   pass_confirm = request.form.get("pass_confirm")
+  pass_old = request.form.get("pass_old")
 
   # pass一致チェック
   if password != pass_confirm:
     flash("パスワードが一致しません")
     staff = {
-        "id": staff_id,
-        "name": staff_name
+      "id": staff_id,
+      "name": staff_name,
+      "pass": pass_old
     }
     return render_template(
-        "admin/admin_staff_edit.html",
-        staff=staff
+      "admin/admin_staff_edit.html",
+      staff=staff
     )
   
-  if password:
-    if staff_id == 'staff@demo.com':
+  # デモ用PWは変更不可
+  if staff_id == 'staff@demo.com':
+    if password != pass_old:
       flash("デモ用アカウントのパスワードは変更できません")
       staff = {
-          "id": staff_id,
-          "name": staff_name
+        "id": staff_id,
+        "name": staff_name,
+        "pass": pass_old
       }
       return render_template(
-          "admin/admin_staff_edit.html",
-          staff=staff
+        "admin/admin_staff_edit.html",
+        staff=staff
       )
-    else:
-      sql = """
-      UPDATE t_admin
-      SET name=%s, pass=%s
-      WHERE id=%s
-      """
-      data = (staff_name,password,staff_id)
-  else:
-    sql = """
-    UPDATE t_admin
-    SET name=%s
-    WHERE id=%s
-    """
-    data = (staff_name,staff_id)
+
+  sql = """
+  UPDATE t_admin
+  SET name=%s, pass=%s
+  WHERE id=%s
+  """
+  data = (staff_name,password,staff_id)
+
 
   # DB接続からSQL文の発行、commit処理、DB切断
   con = connect_db()  # コネクション
