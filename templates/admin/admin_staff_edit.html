@@ -1,0 +1,53 @@
+{% extends "admin/admin_layout.html" %}
+{% block content %}
+
+<main>
+  <h1>管理者情報 -編集-</h1>
+
+  <div>
+    <a href="{{url_for('admin.admin_staff')}}">
+      <button>戻る</button>
+    </a>
+  </div>
+
+  <form action="/admin_staff_update" method="post">
+    <div>
+      <p>*は必須</p>
+      <p>氏名は姓の変更時や登録間違い時のみ変更してください</p>
+      <p>パスワードは再設定時のみ入力してください</p>
+
+      <table>
+        <tr>
+          <th><p>管理者ID</p></th>
+          <td>
+            <p>{{ staff.id }}</p>
+            <input type="hidden" name="staff_id" value="{{ staff.id }}">
+          </td>
+        </tr>
+        <tr>
+          <th><p>氏名*</p></th>
+          <td><input type="text" name="staff_name" value="{{ staff.name }}" required></td>
+        </tr>
+        <tr>
+          <th><p>パスワード再設定</p></th>
+          <td><input type="password" name="pass" id="pass"></td>
+        </tr>
+        <tr>
+          <th><p>パスワード再設定（確認用）</p></th>
+          <td><input type="password" name="pass_confirm" id="pass_confirm"></td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <button type="submit">登録</button>
+    </div>
+  </form>
+
+  <div>
+    <form action="/admin_staff_delete" method="post">
+      <input type="hidden" value="{{ staff.id }}" name="staff_id">
+      <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+    </form>
+  </div>
+
+{% endblock %}

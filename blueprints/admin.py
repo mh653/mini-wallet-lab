@@ -235,10 +235,10 @@ def admin_update_processing():
   return response
 
 # ================================================
-# 会員情報画面表示('/admin_member_info')
+# 会員情報画面表示('/admin_member')
 # ================================================
-@admin_bp.route("/admin_member_info")
-def admin_member_info():
+@admin_bp.route("/admin_member")
+def admin_member():
 
   # SQL作成
   sql = """
@@ -264,15 +264,15 @@ def admin_member_info():
 
   # 会員情報をテンプレートに渡す
   return render_template(
-    "admin/admin_member_info.html", 
+    "admin/admin_member.html", 
     member_info=member_info
   )
 
 # ================================================
-# 管理者情報画面表示('/admin_staff_info')
+# 管理者情報画面表示('/admin_staff')
 # ================================================
-@admin_bp.route("/admin_staff_info")
-def admin_staff_info():
+@admin_bp.route("/admin_staff")
+def admin_staff():
 
   # SQL作成
   sql = """
@@ -288,48 +288,209 @@ def admin_staff_info():
 
   # 会員情報をテンプレートに渡す
   return render_template(
-    "admin/admin_staff_info.html", 
+    "admin/admin_staff.html", 
     staff_info=staff_info
   )
 
 # ================================================
-# 新規管理者登録('/admin_add_staff')
+# 管理者登録画面表示('/admin_staff_add')
 # ================================================
-@admin_bp.route("/admin_add_staff", methods=["POST"])
-def admin_add_staff():
+@admin_bp.route("/admin_staff_add")
+def admin_staff_add():
+
+  staff = {}
+
+  # ページを表示
+  return render_template(
+    "admin/admin_staff_add.html",
+    staff=staff
+  )
+
+# ================================================
+# 新規管理者登録('/admin_staff_insert')
+# ================================================
+@admin_bp.route("/admin_staff_insert", methods=["POST"])
+def admin_staff_insert():
 
   # フォームから取得
-  staff_name = request.form.get("staff_name")
   staff_id = request.form.get("staff_id")
+  staff_name = request.form.get("staff_name")
   password = request.form.get("pass")
   pass_confirm = request.form.get("pass_confirm")
 
   # pass一致チェック
   if password != pass_confirm:
-      err_msg = "パスワードが一致しません"
-      return render_template('pages/error.html',err_msg = err_msg)
+    flash("パスワードが一致しません")
+    staff = {
+        "id": staff_id,
+        "name": staff_name
+    }
+    return render_template(
+        "admin/admin_staff_add.html",
+        staff=staff
+    )
 
-  # SQL作成
+  con = connect_db()  # コネクション
+  cur = con.cursor(dictionary=True)
+
+  # ID重複チェック
+  sql = "SELECT id FROM t_admin WHERE id=%s"
+  cur.execute(sql,(staff_id,))
+  exists = cur.fetchone()
+  if exists:
+    flash("この管理者IDは既に登録されています")
+    staff = {
+      "id": staff_id,
+      "name": staff_name
+    }
+    cur.close()
+    con.close()
+    return render_template(
+      "admin/admin_staff_add.html",
+      staff=staff
+    )
+
+  # 登録用SQL
   sql = """
     INSERT INTO t_admin(id, pass, name, authority)
     VALUES (%s, %s, %s, %s);
   """
-
-  con = connect_db()  # コネクション
-  cur = con.cursor(dictionary=True)
+  # DBに登録
   cur.execute(sql,(staff_id,password,staff_name,1))
   con.commit()  # コネクション
   cur.close()
   con.close()  # コネクション  
 
-  response = make_response(redirect("/admin_staff_info"))
+  flash("管理者を追加しました")
+  response = make_response(redirect("/admin_staff"))
+  return response
+
+
+# ================================================
+# 管理者編集画面表示('/admin_staff_edit')
+# ================================================
+@admin_bp.route("/admin_staff_edit/<string:staff_id>")
+def admin_staff_edit(staff_id):
+
+  # SQL作成
+  sql = """
+    SELECT id,name
+    FROM t_admin
+    WHERE id = %s;
+  """
+  con = connect_db()  # コネクション
+  cur = con.cursor(dictionary=True)
+  cur.execute(sql, (staff_id,))
+  staff = cur.fetchone()
+  cur.close()
+  con.close()  # コネクション  
+
+  # ページを表示
+  return render_template(
+    "admin/admin_staff_edit.html", 
+    staff=staff
+  )
+
+# ================================================
+# 管理者編集処理('/admin_staff_update')
+# ================================================
+@admin_bp.route("/admin_staff_update", methods=["POST"])
+def admin_staff_update():
+
+  # フォームから取得
+  staff_id = request.form.get("staff_id")
+  staff_name = request.form.get("staff_name")
+  password = request.form.get("pass")
+  pass_confirm = request.form.get("pass_confirm")
+
+  # pass一致チェック
+  if password != pass_confirm:
+    flash("パスワードが一致しません")
+    staff = {
+        "id": staff_id,
+        "name": staff_name
+    }
+    return render_template(
+        "admin/admin_staff_edit.html",
+        staff=staff
+    )
+  
+  if password:
+    if staff_id == 'staff@demo.com':
+      flash("デモ用アカウントのパスワードは変更できません")
+      staff = {
+          "id": staff_id,
+          "name": staff_name
+      }
+      return render_template(
+          "admin/admin_staff_edit.html",
+          staff=staff
+      )
+    else:
+      sql = """
+      UPDATE t_admin
+      SET name=%s, pass=%s
+      WHERE id=%s
+      """
+      data = (staff_name,password,staff_id)
+  else:
+    sql = """
+    UPDATE t_admin
+    SET name=%s
+    WHERE id=%s
+    """
+    data = (staff_name,staff_id)
+
+  # DB接続からSQL文の発行、commit処理、DB切断
+  con = connect_db()  # コネクション
+  cur = con.cursor()
+  cur.execute(sql, data)
+  con.commit()  # コネクション
+  cur.close()
+  con.close()  # コネクション
+
+  # 次のページ専用の一時メッセージ
+  flash("管理者情報を変更しました")
+  # リダイレクト
+  response = make_response(redirect("/admin_staff"))
   return response
 
 # ================================================
-# 商品情報画面表示('/admin_products')
+# 管理者削除処理('/admin_staff_delete')
 # ================================================
-@admin_bp.route("/admin_products")
-def admin_products():
+@admin_bp.route("/admin_staff_delete", methods=["POST"])
+def admin_staff_delete():
+
+  staff_id = request.form.get("staff_id")
+
+  if staff_id == 'staff@demo.com':
+    flash("デモ用アカウントは削除できません")
+    response = make_response(redirect("/admin_staff"))
+    return response
+  else:
+    # SELECTを作成
+    sql = """
+    DELETE FROM t_admin
+    WHERE id=%s
+    """
+    # DB接続からSQL文の発行、commit処理、DB切断
+    con = connect_db()  # コネクション
+    cur = con.cursor()
+    cur.execute(sql,(staff_id,))
+    con.commit()  # コネクション
+    cur.close()
+    con.close()  # コネクション
+    # 次のページ専用の一時メッセージ
+    flash("管理者情報を削除しました")
+    # リダイレクト
+    response = make_response(redirect("/admin_staff"))
+    return response
+
+# ================================================
+# 商品情報画面表示('/admin_product')
+# ================================================
+@admin_bp.route("/admin_product")
+def admin_product():
 
   # SQL作成
   sql = """
@@ -352,7 +513,7 @@ def admin_products():
 
   # 会員情報をテンプレートに渡す
   return render_template(
-    "admin/admin_products.html", 
+    "admin/admin_product.html", 
     products=products
   )
 
@@ -443,7 +604,7 @@ def admin_product_insert():
   # 次のページ専用の一時メッセージ
   flash("商品を登録しました")
   # リダイレクト
-  response = make_response(redirect("/admin_products"))
+  response = make_response(redirect("/admin_product"))
   return response
 
 # ================================================
@@ -560,7 +721,7 @@ def admin_product_update():
   # 次のページ専用の一時メッセージ
   flash("商品情報を変更しました")
   # リダイレクト
-  response = make_response(redirect("/admin_products"))
+  response = make_response(redirect("/admin_product"))
   return response
 
 # ================================================

@@ -1,0 +1,38 @@
+{% extends "admin/admin_layout.html" %}
+{% block content %}
+
+<main>
+  <h1>管理者情報</h1>
+
+  <div>
+    <a href="{{url_for('admin.admin_staff_add')}}">
+      <button>新規登録</button>
+    </a>
+  </div>
+
+  <div>
+    <table>
+      <tr>
+        <th>管理者ID</th>
+        <th>氏名</th>
+        <!-- <th>パスワード</th> -->
+        <th>編集</th>
+      </tr>
+
+      {% for s in staff_info %}
+      <tr>
+        <td>{{ s.id }}</td>
+        <td>{{ s.name }}</td>
+        <!-- <td>{{ '*' * s.pass|length }}</td> -->
+        <td>
+          <a href="{{url_for('admin.admin_staff_edit', staff_id=s.id)}}">
+            <button>編集</button>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</main>
+
+{% endblock %}
