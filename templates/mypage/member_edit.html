@@ -1,193 +1,90 @@
 {% extends "layout.html" %} {% block content %}
 <main>
   <div class="contentsWrapperMin">
-    <h1>会員情報を変更する</h1>
+    <h1>会員情報の変更</h1>
 
-      <form action="/member_registration_success" method="post">
-      <div class="memberRegistInfo">
-        <p><label for="mail">メールアドレス（ユーザID）：</label></p>
-        <input type="email" id="mail" name="mail" required />
-
-        <p><label for="name">氏名：</label></p>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          class="semiLongInput"
-        />
-
-        <p><label for="birthday">生年月日：</label></p>
-        <input
-          type="date"
-          id="birthday"
-          name="birthday"
-          required
-          class="middleInput"
-        />
-
-        <p>性別：</p>
-        <div>
-          <input type="radio" id="man" name="gender" value="1" />
-          <label for="man">男性</label>
-          <input type="radio" id="woman" name="gender" value="2" />
-          <label for="woman">女性</label>
-          <input type="radio" id="other" name="gender" value="3" />
-          <label for="other">その他（回答しない）</label>
-        </div>
-
-        <p><label for="tel">電話番号：</label></p>
-        <input type="tel" id="tel" name="tel" required class="middleInput" />
-
-        <p><label for="zip">郵便番号：</label></p>
-        <input type="text" id="zip" name="zip" required class="shortInput" />
-
-        <p><label for="address">住所：</label></p>
-        <input type="text" id="address" name="address1" required />
-
-        <p></p>
-        <input
-          type="text"
-          id="address2"
-          name="address2"
-          required
-          placeholder="番地"
-        />
-
-        <p></p>
-        <input
-          type="text"
-          id="address3"
-          name="address3"
-          placeholder="マンション名以下（任意）"
-        />
-
-        <p><label for="pass">パスワード：</label></p>
-        <input
-          type="password"
-          id="pass"
-          name="pass"
-          required
-          class="semiLongInput"
-        />
-
-        <p><label for="pass_confirm">パスワード（確認用）：</label></p>
-        <input
-          type="password"
-          id="pass_confirm"
-          name="pass_confirm"
-          required
-          class="semiLongInput"
-        />
-
-        <p>メールマガジン</p>
-        <div>
-          <input type="radio" id="yes" name="m_flag" value="1" checked />
-          <label for="yes">受信する</label>
-          <input type="radio" id="no" name="m_flag" value="0" />
-          <label for="no">受信しない</label>
-        </div>
+    <form action="/member_update" method="post">
+      <div>
+        <table>
+          <tr>
+            <th><p><label for="mail">メールアドレス（ユーザID）：</label></p></th>
+            <td>
+              <p>{{ user_info.id }}</p>
+              <input type="hidden" id="mail" name="mail" required value="{{ user_info.id }}"/>
+            </td>
+          </tr>
+          <tr>
+            <th><p><label for="name">氏名：</label></p></th>
+            <td><input type="text" id="name" name="name" value="{{ user_info.name }}" required class="semiLongInput"/></td>
+          </tr>
+          <tr>
+            <th><p><label for="birthday">生年月日：</label></p></th>
+            <td><input type="date" id="birthday" name="birthday" value="{{ user_info.birthday }}" required class="middleInput"/></td>
+          </tr>
+          <tr>
+            <th><p>性別：</p></th>
+            <td>
+              <div>
+                <input type="radio" id="man" name="gender" value="1" {% if user_info.gender == 1 %}checked{% endif %}/>
+                <label for="man">男性</label>
+                <input type="radio" id="woman" name="gender" value="2" {% if user_info.gender == 2 %}checked{% endif %}/>
+                <label for="woman">女性</label>
+                <input type="radio" id="other" name="gender" value="3" {% if user_info.gender == 3 %}checked{% endif %}/>
+                <label for="other">その他（回答しない）</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th><p><label for="tel">電話番号：</label></p></th>
+            <td><input type="tel" id="tel" name="tel" value="{{ user_info.tel }}" required class="middleInput" /></td>
+          </tr>
+          <tr>
+            <th><p><label for="zip">郵便番号：</label></p></th>
+            <td><input type="text" id="zip" name="zip" value="{{ user_info.zip }}" required class="shortInput" /></td>
+          </tr>
+          <tr>
+            <th><p><label for="address">住所：</label></p></th>
+            <td><input type="text" id="address" name="address1" value="{{ user_info.address1 }}" required /></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><input type="text" id="address" name="address2" value="{{ user_info.address2 }}" placeholder="番地" required /></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><input type="text" id="address" name="address3" value="{{ user_info.address3 }}" placeholder="マンション名以下（任意）" required /></td>
+          </tr>
+          <tr>
+            <th><p><label for="pass">パスワード：</label></p></th>
+            <td>
+              <input type="password" name="pass" value="{{ user_info.pass }}" required class="semiLongInput"/>
+              <input type="hidden" name="pass_old" value="{{ user_info.pass }}"/>
+            </td>
+          </tr>
+          <tr>
+            <th><p><label for="pass_confirm">パスワード（確認用）：</label></p></th>
+            <td><input type="password" name="pass_confirm" value="{{ user_info.pass }}" required class="semiLongInput"/></td>
+          </tr>
+          <tr>
+            <th><p>メールマガジン</p></th>
+            <td>
+              <div>
+                <input type="radio" id="yes" name="m_flag" value="1" {% if user_info.m_flag == 1 %}checked{% endif %}/>
+                <label for="yes">受信する</label>
+                <input type="radio" id="no" name="m_flag" value="0" {% if user_info.m_flag == 0 %}checked{% endif %}/>
+                <label for="no">受信しない</label>
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
 
       <div class="centerBtn">
         <button type="submit" name="btn" value="login" class="btn150">
-          登録する
+          変更する
         </button>
-      </div>
+
     </form>
-
-    <!-- <form action="/member_registration_success" method="post">
-      <div class="memberRegistInfo">
-        <p><label for="mail">メールアドレス：</label></p>
-        <input type="email" id="mail" name="mail" required />
-
-        <p><label for="name">氏名：</label></p>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          class="semiLongInput"
-        />
-
-        <p><label for="birthday">生年月日：</label></p>
-        <input
-          type="date"
-          id="birthday"
-          name="birthday"
-          required
-          class="middleInput"
-        />
-
-        <p>性別：</p>
-        <div>
-          <input type="radio" id="man" name="gender" value="1" />
-          <label for="man">男性</label>
-          <input type="radio" id="woman" name="gender" value="2" />
-          <label for="woman">女性</label>
-          <input type="radio" id="other" name="gender" value="3" />
-          <label for="other">その他（回答しない）</label>
-        </div>
-
-        <p><label for="tel">電話番号：</label></p>
-        <input type="tel" id="tel" name="tel" required class="middleInput" />
-
-        <p><label for="zip">郵便番号：</label></p>
-        <input type="text" id="zip" name="zip" required class="shortInput" />
-
-        <p><label for="address">住所：</label></p>
-        <input type="text" id="address" name="address1" required />
-
-        <p></p>
-        <input
-          type="text"
-          id="address2"
-          name="address2"
-          required
-          placeholder="番地"
-        />
-
-        <p></p>
-        <input
-          type="text"
-          id="address3"
-          name="address3"
-          placeholder="マンション名以下（任意）"
-        />
-
-        <p><label for="pass">パスワード：</label></p>
-        <input
-          type="password"
-          id="pass"
-          name="pass"
-          required
-          class="semiLongInput"
-        />
-
-        <p><label for="pass_confirm">パスワード（確認用）：</label></p>
-        <input
-          type="password"
-          id="pass_confirm"
-          name="pass_confirm"
-          required
-          class="semiLongInput"
-        />
-
-        <p>メールマガジン</p>
-        <div>
-          <input type="radio" id="yes" name="m_flag" value="1" checked />
-          <label for="yes">受信する</label>
-          <input type="radio" id="no" name="m_flag" value="0" />
-          <label for="no">受信しない</label>
-        </div>
-      </div>
-
-      <div class="centerBtn">
-        <button type="submit" name="btn" value="login" class="btn150">
-          登録する
-        </button>
-      </div>
-    </form> -->
 
   </div>
 </main>

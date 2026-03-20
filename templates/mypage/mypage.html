@@ -6,7 +6,7 @@
 
       {% if user_info %}
         <h2>＜会員情報＞</h2>
-                 <table>
+          <table>
             <tr>
               <th><p>メールアドレス</p></th>
               <td><p>{{ user_info.id }}</p></td>
@@ -76,7 +76,9 @@
         </div> -->
 
         <div>
-          <button>会員情報を変更する</button>
+          <a href="{{url_for('mypage.member_edit')}}">
+            <button>会員情報を変更する</button>
+          </a>
         </div>
 
         <h2>＜購入履歴＞</h2>

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, make_response, redirect
 import mysql.connector
 
 # Blueprint名はsearch
@@ -140,6 +140,132 @@ def mypage_order_detail(order_id):
     order_detail=order_detail,
     total=total
   )
+
+# ==============================
+# 会員情報変更画面表示処理('/member_edit')
+# ==============================
+@mypage_bp.route("/member_edit")
+def member_edit():
+
+  # クッキーからユーザ情報を取得
+  user_id = request.cookies.get("user_id")
+  print(user_id)
+
+  # ログインしてない場合
+  if user_id is None:
+    return render_template("mypage/mypage.html", user_info=[], orders=[])
+
+  # ユーザ情報のSQL
+  sqlUser = """
+    SELECT
+      *
+    FROM t_member
+    WHERE id = %s;
+    """
+
+  # DB接続処理
+  con = connect_db()  # コネクション
+  cur = con.cursor(dictionary=True)
+  cur.execute(sqlUser, (user_id,))
+  user_info = cur.fetchone()
+  cur.close()
+  con.close()  # コネクション
+
+  # 画面を表示
+  return render_template(
+      "mypage/member_edit.html", user_info=user_info
+  )
+
+# ================================================
+# 会員情報変更処理('/member_update')
+# ================================================
+@mypage_bp.route("/member_update", methods=["POST"])
+def member_update():
+  # フォームからユーザー名を取得
+  user_id = request.form.get("mail")
+  password = request.form.get("pass")
+  pass_confirm = request.form.get("pass_confirm")
+  pass_old = request.form.get("pass_old")
+  name = request.form.get("name")
+  birthday = request.form.get("birthday")
+  gender = request.form.get("gender")
+  tel = request.form.get("tel")
+  zip = request.form.get("zip")
+  address1 = request.form.get("address1")
+  address2 = request.form.get("address2")
+  address3 = request.form.get("address3")
+  m_flag = request.form.get("m_flag")
+
+  # pass一致チェック
+  if password != pass_confirm:
+    err_msg = "パスワードが一致しません"
+    return render_template(
+      "pages/error.html",
+      err_msg=err_msg
+    )
+
+  # デモ用PWは変更不可
+  if user_id == 'demo@demo.com':
+    if password != pass_old:
+      err_msg = "デモ用アカウントのパスワードは変更できません"
+      return render_template(
+        "pages/error.html",
+        err_msg=err_msg
+      )
+
+  # SQLを作成
+  sql = """
+  UPDATE t_member
+  SET
+    pass=%s,
+    name=%s,
+    birthday=%s,
+    gender=%s,
+    tel=%s,
+    address1=%s,
+    address2=%s,
+    address3=%s,
+    m_flag=%s
+  WHERE id=%s
+  """
+
+  data = (
+    password,
+    name,
+    birthday,
+    gender,
+    tel,
+    address1,
+    address2,
+    address3,
+    m_flag,
+    user_id
+  )
+
+  # DB接続からSQL文の発行、commit処理、DB切断
+  con = connect_db()  # コネクション
+  cur = con.cursor()
+  cur.execute(sql, data)
+  con.commit()  # コネクション
+  cur.close()
+  con.close()  # コネクション
+
+  # レスポンスオブジェクトを作成
+  response = make_response(redirect("/member_edit_success"))
+  # レスポンスオブジェクトを返す
+  return response
+
+# ==============================
+# 変更成功画面表示処理('/member_edit_success')
+# ==============================
+@mypage_bp.route("/member_edit_success")
+def member_edit_success():
+
+  # 画面を表示
+  return render_template(
+      "mypage/member_edit_success.html"
+  )
+
 
 # ==============================
 # DB接続
