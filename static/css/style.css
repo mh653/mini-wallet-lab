@@ -875,15 +875,76 @@ input[type="number"]::-webkit-outer-spin-button {
 /* 注文明細 */
 .odMain {
   margin: 20px;
+  padding-bottom:100px;
 }
 .orderDetail {
   width: 800px;
   padding: 20px;
   border: var(--black) 1px solid;
 }
+.orderDetail h1{
+  font-size: 30px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+.orderDetail h2 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.odSection {
+  padding: 10px 0;
+}
+.odLR {
+  display: flex;
+  justify-content: space-between;
 
-
-
+}
+.borderTableBw {
+  border-collapse: collapse;
+  margin-bottom: 5px;
+}
+.borderTableBw th,
+.borderTableBw td{
+  border:1px solid var(--black);
+  padding:4px 12px;
+  text-align:left;
+}
+.borderTableBw th{
+  font-weight: bold;
+  background:var(--gray4);
+}
+.odProducts {
+  width: 100%;
+}
+.odProducts .right{
+  width: 100px;
+  text-align: right;
+}
+.odTotalWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+.odTotal {
+  width: 100px;
+  text-align: right;
+}
+.odTotal td{
+  text-align: right;
+}
+.prosessOd th {
+  text-align: center;
+}
+.prosessOd td {
+  width: 100px;
+  height: 95px;
+}
+.od140 th {
+  width: 140px;
+}
+.odUserBottom {
+  padding-bottom: 20px;
+}
 
 /* 縮小表示 */
 body{

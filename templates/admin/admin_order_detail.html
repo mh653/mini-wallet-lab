@@ -33,65 +33,68 @@
       <h1>注文明細（出荷指示書）</h1>
       <hr>
 
-      <div>
-        <table>
-          <tr>
-            <th>受注番号：</th>
-            <td>{{ order.id }}</td>
-          </tr>
-          <tr>
-            <th>注文日：</th>
-            <td>{{ order.order_date }}</td>
-          </tr>
-          <tr>
-            <th>支払方法：</th>
-            <td>{{ order.payment_str }}</td>
-          </tr>
-        </table>
-
-        <h2>注文者情報</h2>
-        <table>
-          <tr>
-            <th>注文者：</th>
-            <td>{{ order.orderer }}　様</td>
-          </tr>
-          <tr>
-            <th>ユーザID：</th>
-            <td>{{ order.member_id }}</td>
-          </tr>
-          <tr>
-            <th>メールアドレス：</th>
-            <td>{{ order.mail }}</td>
-          </tr>
-          <tr>
-            <th>電話番号：</th>
-            <td>{{ order.tel }}</td>
-          </tr>
-        </table>
+      <div class="odSection">
+        <div class="odLR">
+          <div>
+            <h2>注文者情報</h2>
+            <table class="borderTableBw od140">
+              <tr>
+                <th>注文者</th>
+                <td>{{ order.orderer }}　様</td>
+              </tr>
+              <tr>
+                <th>ユーザID</th>
+                <td>{{ order.member_id }}</td>
+              </tr>
+              <tr>
+                <th>メールアドレス</th>
+                <td>{{ order.mail }}</td>
+              </tr>
+              <tr>
+                <th>電話番号</th>
+                <td>{{ order.tel }}</td>
+              </tr>
+            </table>            
+          </div>
+          <div>
+            <table>
+              <tr>
+                <th>受注番号：</th>
+                <td>{{ "%06d"|format(order.id) }}</td>
+              </tr>
+              <tr>
+                <th>注文日　：</th>
+                <td>{{ order.order_date }}</td>
+              </tr>
+              <tr>
+                <th>支払方法：</th>
+                <td>{{ order.payment_str }}</td>
+              </tr>
+            </table>            
+          </div>
+        </div>
 
         <h2>配送先情報</h2>
-        <table>
+        <table class="borderTableBw od140">
           <tr>
-            <th>郵便番号：</th>
+            <th>郵便番号</th>
             <td>{{ order.zip }}</td>
           </tr>
           <tr>
-            <th>住所：</th>
-            <td>{{ order.address1 }}</td>
-            <td>{{ order.address2 }}</td>
-            <td>{{ order.address3 }}</td>
+            <th>住所</th>
+            <td>{{ order.address1 }} {{ order.address2 }} {{ order.address3 }}</td>
           </tr>
           <tr>
-            <th>宛先者：</th>
+            <th>宛先者</th>
             <td>{{ order.recipient }}　様</td>
           </tr>
         </table>
       </div>
 
       <hr>
-      <div>
+      <div class="odSection">
         <h2>購入内容</h2>
-        <table>
+        <table class="borderTableBw odProducts">
           <tr>
             <th>商品番号</th>
             <th>商品名</th>
@@ -101,28 +104,31 @@
           </tr>
           {% for item in order_detail %}      
             <tr>
-              <td>{{ item.product_id }}</td>
+              <td class="right">{{ "%05d"|format(item.product_id) }}</td>
               <td>{{ item.name }}</td>
-              <td>{{ item.price }}円</td>
-              <td>{{ item.quantity }}</td>
-              <td>{{ item.subtotal }}円</td>
+              <td class="right">{{ "{:,}".format(item.price) }}円</td>
+              <td class="right">{{ item.quantity }}</td>
+              <td class="right">{{ "{:,}".format(item.subtotal) }}円</td>
             </tr>
           {% endfor %}
         </table>
 
-        <table>
-          <tr>
-            <th>合計</th>
-          </tr>      
-          <tr>
-            <td>{{ total }}円</td>
-          </tr>
-        </table>
-
+        <div class="odTotalWrapper">
+          <table class="borderTableBw odTotal">
+            <tr>
+              <th>合計</th>
+            </tr>      
+            <tr>
+              <td>{{ "{:,}".format(total) }}円</td>
+            </tr>
+          </table>          
+        </div>
+      </div>
       <hr>
-      <div>
+
+      <div class="odSection">
         <h2>処理担当</h2>
-        <table>
+        <table class="borderTableBw prosessOd">
           <tr>
             <th>受注処理</th>
             <th>発送</th>
