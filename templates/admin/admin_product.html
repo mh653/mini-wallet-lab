@@ -2,40 +2,43 @@
 {% block content %}
 
 <main>
-  <h1>商品情報</h1>
+  <div class="contentsWrapperMid">
+    <h1>商品情報</h1>
 
-  <div>
-    <a href="{{url_for('admin.admin_product_add')}}">
-      <button>新規登録</button>
-    </a>
-  </div>
+    <div class="overTable">
+      <a href="{{url_for('admin.admin_product_add')}}">
+        <button class="buttonAdmin">新規登録</button>
+      </a>
+    </div>
 
-  <div>
-    <table>
-      <tr>
-        <th>商品ID</th>
-        <th>商品名</th>
-        <th>価格</th>
-        <th>在庫数</th>
-        <th>状態</th>
-        <th>編集</th>
-      </tr>
+    <div>
+      <table class="borderTable">
+        <tr>
+          <th>商品ID</th>
+          <th>商品名</th>
+          <th>価格</th>
+          <th>在庫数</th>
+          <th>状態</th>
+          <th>編集</th>
+        </tr>
 
-      {% for p in products %}
-      <tr>
-        <td>{{ p.id }}</td>
-        <td>{{ p.name }}</td>
-        <td>{{ p.price }}</td>
-        <td>{{ p.stock }}</td>
-        <td>{{ p.is_active_str }}</td>
-        <td>
-          <a href="{{url_for('admin.admin_product_edit', product_id=p.id)}}">
-            <button>編集</button>
-          </a>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
+        {% for p in products %}
+        <tr>
+          <td class="pid right">{{ p.id }}</td>
+          <td class="pname">{{ p.name }}</td>
+          <td class="pprice right">{{ "{:,}".format(p.price) }} 円</td>
+          <td class="pstock right">{{ p.stock }} 個</td>
+          <td class="pstatus">{{ p.is_active_str }}</td>
+          <td>
+            <a href="{{url_for('admin.admin_product_edit', product_id=p.id)}}">
+              <button class="buttonAdmin">編集</button>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    
   </div>
 </main>
 

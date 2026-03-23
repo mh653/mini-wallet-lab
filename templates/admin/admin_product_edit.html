@@ -2,111 +2,109 @@
 {% block content %}
 
 <main>
-  <h1>商品情報 -編集-</h1>
+  <div class="contentsWrapperMid">
+    <h1>商品情報 -編集-</h1>
 
-  <div>
-    <button onclick="history.back()">戻る</button>
-  </div>
-
-  <form action="/admin_product_update" method="post" enctype="multipart/form-data">
-
-    <div>
-      <table>
-        <tr>
-          <th>商品ID</th>
-          <td>
-            <p>{{ product.id }}</p>
-            <input type="hidden" value="{{ product.id }}" name="product_id">
-          </td>
-        </tr>
-        <tr>
-          <th>商品名</th>
-          <td><input type="text" name="name" value="{{ product.name }}" required></td>
-        </tr>
-        <tr>
-          <th>価格</th>
-          <td><input type="number" name="price" value="{{ product.price }}" required></td>
-        </tr>
-        <tr>
-          <th>シリーズ</th>
-          <td>
-            <select name="series_id" id="series_id">
-              <option value="1" {% if product.series_id == 1 %}selected{% endif %}>Just Day</option>
-              <option value="2" {% if product.series_id == 2 %}selected{% endif %}>Someday</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <th>カラー</th>
-          <td>
-            <select name="color_id" id="color_id">
-              <option value="1" {% if product.color_id == 1 %}selected{% endif %}>Yellow</option>
-              <option value="2" {% if product.color_id == 2 %}selected{% endif %}>Pink</option>
-              <option value="3" {% if product.color_id == 3 %}selected{% endif %}>Blue</option>
-              <option value="4" {% if product.color_id == 4 %}selected{% endif %}>Purple</option>
-              <option value="5" {% if product.color_id == 5 %}selected{% endif %}>Green</option>
-              <option value="6" {% if product.color_id == 6 %}selected{% endif %}>Black</option>
-              <option value="7" {% if product.color_id == 7 %}selected{% endif %}>Brown</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <th>カラー詳細</th>
-          <td><input type="text" name="color_detail" value="{{ product.color_detail }}" required></td>
-        </tr>
-        <tr>
-          <th>商品説明</th>
-          <td><textarea name="caption">{{ product.caption }}</textarea></td>
-        </tr>
-        <tr>
-          <th>在庫数</th>
-          <td><input type="number" name="stock" value="{{ product.stock }}" min="0" required></td>
-        </tr>
-        <tr>
-          <th>商品画像</th>
-          <td>
-            <img id="current_img" src="{{ url_for('static', filename=product.image_path) }}" alt="現在の商品画像" width="440">
-            <img id="img_preview" src="" width="440" style="display:none;">
-          </td>
-        </tr>
-        <tr>
-          <th></th>
-          <td>
-            <input type="file" name="img_file" id="img_file" accept="image/*">
-            <p>※画像を差し替える場合は選択してください</p>
-          </td>
-        </tr>
-        <tr>
-          <th>検索キーワード（任意）</th>
-          <td><textarea name="search_key">{{ product.search_key }}</textarea></td>
-        </tr>
-        <tr>
-          <th>状態</th>
-          <td>
-            <select name="is_active" id="is_active">
-              <option value="0" {% if product.is_active == 0 %}selected{% endif %}>非公開</option>
-              <option value="1" {% if product.is_active == 1 %}selected{% endif %}>公開</option>
-            </select>
-          </td>
-        </tr>
-      </table>
+    <div class="overTable">
+      <button onclick="history.back()" class="buttonAdmin">戻る</button>
     </div>
 
-    <div>
-      <button type="submit">変更</button>
-    </div>
+    <form action="/admin_product_update" method="post" enctype="multipart/form-data">
 
-  </form>
+      <div>
+        <table class="borderTable productTable">
+          <tr>
+            <th>商品ID</th>
+            <td>
+              <p>{{ product.id }}</p>
+              <input type="hidden" value="{{ product.id }}" name="product_id">
+            </td>
+          </tr>
+          <tr>
+            <th>商品名</th>
+            <td><input type="text" name="name" value="{{ product.name }}" required></td>
+          </tr>
+          <tr>
+            <th>価格</th>
+            <td><input type="number" name="price" value="{{ product.price }}" required> 円</td>
+          </tr>
+          <tr>
+            <th>シリーズ</th>
+            <td>
+              <select name="series_id" id="series_id">
+                <option value="1" {% if product.series_id == 1 %}selected{% endif %}>Just Day</option>
+                <option value="2" {% if product.series_id == 2 %}selected{% endif %}>Someday</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>カラー</th>
+            <td>
+              <select name="color_id" id="color_id">
+                <option value="1" {% if product.color_id == 1 %}selected{% endif %}>Yellow</option>
+                <option value="2" {% if product.color_id == 2 %}selected{% endif %}>Pink</option>
+                <option value="3" {% if product.color_id == 3 %}selected{% endif %}>Blue</option>
+                <option value="4" {% if product.color_id == 4 %}selected{% endif %}>Purple</option>
+                <option value="5" {% if product.color_id == 5 %}selected{% endif %}>Green</option>
+                <option value="6" {% if product.color_id == 6 %}selected{% endif %}>Black</option>
+                <option value="7" {% if product.color_id == 7 %}selected{% endif %}>Brown</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th>カラー詳細</th>
+            <td><input type="text" name="color_detail" value="{{ product.color_detail }}" required></td>
+          </tr>
+          <tr>
+            <th>商品説明</th>
+            <td><textarea name="caption">{{ product.caption }}</textarea></td>
+          </tr>
+          <tr>
+            <th>在庫数</th>
+            <td><input type="number" name="stock" value="{{ product.stock }}" min="0" required> 個</td>
+          </tr>
+          <tr>
+            <th>商品画像</th>
+            <td>
+              <div class="imageThumb">
+                <img id="current_img" src="{{ url_for('static', filename=product.image_path) }}" alt="現在の商品画像" width="440">
+                <img id="img_preview" src="" width="440" style="display:none;">                
+              </div>
+              <input type="file" name="img_file" id="img_file" accept="image/*">
+              <p>※画像を差し替える場合は選択してください</p>
+            </td>
+          </tr>
+          <tr>
+            <th>検索キーワード（任意）</th>
+            <td><textarea name="search_key">{{ product.search_key }}</textarea></td>
+          </tr>
+          <tr>
+            <th>状態</th>
+            <td>
+              <select name="is_active" id="is_active">
+                <option value="0" {% if product.is_active == 0 %}selected{% endif %}>非公開</option>
+                <option value="1" {% if product.is_active == 1 %}selected{% endif %}>公開</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </div>
 
+      <div class="changeBtnAdmin">
+        <button type="submit" class="buttonAdmin">変更する</button>
+      </div>
 
-  <div>
-    <form action="/admin_product_delete" method="post">
-      <input type="hidden" value="{{ product.id }}" name="product_id">
-      <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
     </form>
-  </div>
 
-  
+
+    <div class="deleteBtnAdmin">
+      <form action="/admin_product_delete" method="post">
+        <input type="hidden" value="{{ product.id }}" name="product_id">
+        <button type="submit" onclick="return confirm('本当に削除しますか？')" class="buttonAdmin buttonAdminRed">削除</button>
+      </form>
+    </div>
+
+  </div>
 </main>
 
 {% endblock %}

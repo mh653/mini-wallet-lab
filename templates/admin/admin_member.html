@@ -2,42 +2,41 @@
 {% block content %}
 
 <main>
-  <h1>会員情報</h1>
+  <div class="contentsWrapperLg">
+    <h1>会員情報</h1>
 
-  <div>
-    <button onclick="return alert('ダミーのボタンです。申し訳ございません。')">メルマガ宛先出力</button>
-  </div>
+    <div class="overTable">
+      <button onclick="return alert('ダミーのボタンです。申し訳ございません。')" class="buttonAdmin">メルマガ宛先出力</button>
+    </div>
 
-  <div>
-    <table>
-      <tr>
-        <th>ユーザID</th>
-        <th>氏名</th>
-        <th>生年月日</th>
-        <th>性別</th>
-        <th>電話番号</th>
-        <th>郵便番号</th>
-        <th>住所1</th>
-        <th>住所2</th>
-        <th>住所3</th>
-        <th>メールマガジン</th>
-      </tr>
+    <div>
+      <table class="borderTable">
+        <tr>
+          <th>ユーザID</th>
+          <th>氏名</th>
+          <th>生年月日</th>
+          <th>性別</th>
+          <th>電話番号</th>
+          <th>郵便番号</th>
+          <th>住所</th>
+          <th>メールマガジン</th>
+        </tr>
 
-      {% for m in member_info %}
-      <tr>
-        <td>{{ m.id }}</td>
-        <td>{{ m.name }} 様</td>
-        <td>{{ m.birthday_str }}</td>
-        <td>{{ m.gender_str }}</td>
-        <td>{{ m.tel }}</td>
-        <td>{{ m.zip }}</td>
-        <td>{{ m.address1 }}</td>
-        <td>{{ m.address2 }}</td>
-        <td>{{ m.address3 }}</td>
-        <td>{{ m.m_flag_str }}</td>
-      </tr>
-      {% endfor %}
-    </table>
+        {% for m in member_info %}
+        <tr>
+          <td>{{ m.id }}</td>
+          <td>{{ m.name }} 様</td>
+          <td>{{ m.birthday_str }}</td>
+          <td>{{ m.gender_str }}</td>
+          <td>{{ m.tel }}</td>
+          <td>{{ m.zip }}</td>
+          <td>{{ m.address1 }} {{ m.address2 }} {{ m.address3 }}</td>
+          <td>{{ m.m_flag_str }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
   </div>
 </main>
 

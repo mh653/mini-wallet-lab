@@ -2,54 +2,57 @@
 {% block content %}
 
 <main>
-  <h1>注文情報</h1>
+  <div class="contentsWrapper">
+    <h1>注文情報</h1>
 
-  <div>
-    <p>絞り込み：</p>
-    <p onclick="filterProsessing('1')">受注処理待ち</p>
-    <p onclick="filterProsessing('2')">発送待ち</p>
-    <p onclick="filterProsessing('0')">キャンセル</p>
-    <p onclick="filterProsessing('All')">全件表示</p>
+    <div class="orderBar overTable">
+      <p>絞り込み:</p>
+      <p onclick="filterProsessing('1')" class="orderFilter">受注処理待ち</p>
+      <p onclick="filterProsessing('2')" class="orderFilter">発送待ち</p>
+      <p onclick="filterProsessing('0')" class="orderFilter">キャンセル</p>
+      <p onclick="filterProsessing('All')" class="orderFilter">全件表示</p>
+    </div>
+
+    <div>
+      <table class="borderTable">
+        <tr>
+          <th class="oid">注文ID</th>
+          <th class="odate">注文日</th>
+          <th class="oname">注文者</th>
+          <th class="opay">支払方法</th>
+          <th class="ost">ステータス</th>
+          <th class="odt">注文明細(出荷指示書)</th>
+        </tr>
+
+        {% for o in order %}
+        <tr class="adminOrder" data-processing="{{ o.processing }}">
+          <td>{{ "%06d"|format(o.id) }}</td>
+          <td>{{ o.order_date }}</td>
+          <td>{{ o.orderer }}　様</td>
+          <td>{{ o.payment_str }}</td>
+          <td>
+            <form action="/admin_update_processing" method="post">
+              <input type="hidden" value="{{ o.id }}" name="order_id"/>
+              <select name="processing" class="prosessingSelect">
+                <option value="1" {% if o.processing == 1 %}selected{% endif %}>受注処理待ち</option>
+                <option value="2" {% if o.processing == 2 %}selected{% endif %}>発送待ち</option>
+                <option value="3" {% if o.processing == 3 %}selected{% endif %}>完了</option>
+                <option value="0" {% if o.processing == 0 %}selected{% endif %}>キャンセル</option>
+              </select>
+            <button type="submit" class="buttonAdmin">更新する</button>
+            </form>
+          </td>
+          <td>
+            <a href="{{url_for('admin.admin_order_detail', order_id=o.id)}}" target="_blank">
+              <button class="buttonAdmin">表示</button>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
   </div>
 
-  <div>
-    <table>
-      <tr>
-        <th>注文ID</th>
-        <th>注文日</th>
-        <th>注文者</th>
-        <th>支払方法</th>
-        <th>ステータス</th>
-        <th>注文明細(出荷指示書)</th>
-      </tr>
-
-      {% for o in order %}
-      <tr class="adminOrder" data-processing="{{ o.processing }}">
-        <td>{{ o.id }}</td>
-        <td>{{ o.order_date }}</td>
-        <td>{{ o.orderer }}　様</td>
-        <td>{{ o.payment_str }}</td>
-        <td>
-          <form action="/admin_update_processing" method="post">
-            <input type="hidden" value="{{ o.id }}" name="order_id"/>
-            <select name="processing">
-              <option value="1" {% if o.processing == 1 %}selected{% endif %}>受注処理待ち</option>
-              <option value="2" {% if o.processing == 2 %}selected{% endif %}>発送待ち</option>
-              <option value="3" {% if o.processing == 3 %}selected{% endif %}>完了</option>
-              <option value="0" {% if o.processing == 0 %}selected{% endif %}>キャンセル</option>
-            </select>
-          <button type="submit">更新する</button>
-          </form>
-        </td>
-        <td>
-          <a href="{{url_for('admin.admin_order_detail', order_id=o.id)}}" target="_blank">
-            <button>表示</button>
-          </a>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
 </main>
 
 {% endblock %}

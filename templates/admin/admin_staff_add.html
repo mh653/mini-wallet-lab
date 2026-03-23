@@ -2,40 +2,42 @@
 {% block content %}
 
 <main>
-  <h1>管理者情報 -新規登録-</h1>
+  <div class="contentsWrapperMin">
+    <h1>管理者情報 -新規登録-</h1>
 
-  <div>
-    <a href="{{url_for('admin.admin_staff')}}">
-      <button>戻る</button>
-    </a>
+    <div class="overTable">
+      <a href="{{url_for('admin.admin_staff')}}">
+        <button class="buttonAdmin">戻る</button>
+      </a>
+    </div>
+
+    <form action="/admin_staff_insert" method="post">
+      <div>
+        <table class="borderTable">
+          <tr>
+            <th><p>管理者ID（メールアドレス）</p></th>
+            <td>
+              <input type="mail" name="staff_id" value="{{ staff.id }}" required>
+            </td>
+          </tr>
+          <tr>
+            <th><p>氏名</p></th>
+            <td><input type="text" name="staff_name" value="{{ staff.name }}" required></td>
+          </tr>
+          <tr>
+            <th><p>パスワード</p></th>
+            <td><input type="password" name="pass" id="pass" required></td>
+          </tr>
+          <tr>
+            <th><p>パスワード（確認用）</p></th>
+            <td><input type="password" name="pass_confirm" id="pass_confirm" required></td>
+          </tr>
+        </table>
+      </div>
+      <div class="changeBtnAdmin">
+        <button type="submit" class="buttonAdmin">登録する</button>
+      </div>
+    </form>
+    
   </div>
-
-  <form action="/admin_staff_insert" method="post">
-    <div>
-      <table>
-        <tr>
-          <th><p>管理者ID（従業員用メールアドレス）</p></th>
-          <td>
-            <input type="mail" name="staff_id" value="{{ staff.id }}" required>
-          </td>
-        </tr>
-        <tr>
-          <th><p>氏名</p></th>
-          <td><input type="text" name="staff_name" value="{{ staff.name }}" required></td>
-        </tr>
-        <tr>
-          <th><p>パスワード</p></th>
-          <td><input type="password" name="pass" id="pass" required></td>
-        </tr>
-        <tr>
-          <th><p>パスワード（確認用）</p></th>
-          <td><input type="password" name="pass_confirm" id="pass_confirm" required></td>
-        </tr>
-      </table>
-    </div>
-    <div>
-      <button type="submit">登録</button>
-    </div>
-  </form>
-
 {% endblock %}

@@ -757,7 +757,7 @@ def admin_product_delete():
   # 次のページ専用の一時メッセージ
   flash("商品を削除しました")
   # リダイレクト
-  response = make_response(redirect("/admin_products"))
+  response = make_response(redirect("/admin_product"))
   return response
 
 # ==============================

@@ -28,16 +28,14 @@
 
     <header>
       <div class="top">
-        <a href="/"
-          ><p class="storeName">
+        <div class="topAdmin">
+          <p class="storeName">
             <span class="upperCase">mini wallet l</span>ab
-          </p></a
-        >
-        <p>-管理者ページ-</p>
-
+          </p>
+          <p>-管理者ページ-</p>         
+        </div>
         <nav>
           <div class="menu2">
-            <!-- postはformしかダメ。getならaタグでOK -->
             <form action="/admin_logout_process" method="post">
               <button type="submit" name="btn" value="logout">
                 管理者ログアウト
@@ -47,13 +45,11 @@
         </nav>
       </div>
 
-      <div class="bottom">
+      <div class="bottom bottomAdmin">
         <nav>
-          <ul class="menu3 upperCase">
+          <ul class="menu3">
             <li><a href="{{url_for('admin.admin_top')}}">トップ</a></li>
             <li><a href="{{url_for('admin.admin_order')}}">注文情報</a></li>
-            <!-- app.py の @app.route の下にある products という関数を url_for に指定すると、
-                    その関数を持つ @app.route にルーティングしてくれる。 -->
             <li><a href="{{url_for('admin.admin_product')}}">商品情報</a></li>
             <li><a href="{{url_for('admin.admin_member')}}">会員情報</a></li>
             <li><a href="{{url_for('admin.admin_staff')}}">管理者情報</a></li>

@@ -2,51 +2,55 @@
 {% block content %}
 
 <main>
-  <h1>管理者情報 -編集-</h1>
+  <div class="contentsWrapperMin">
+    <h1>管理者情報 -編集-</h1>
 
-  <div>
-    <a href="{{url_for('admin.admin_staff')}}">
-      <button>戻る</button>
-    </a>
-  </div>
-
-  <form action="/admin_staff_update" method="post">
-    <div>
-      <table>
-        <tr>
-          <th><p>管理者ID</p></th>
-          <td>
-            <p>{{ staff.id }}</p>
-            <input type="hidden" name="staff_id" value="{{ staff.id }}">
-          </td>
-        </tr>
-        <tr>
-          <th><p>氏名</p></th>
-          <td><input type="text" name="staff_name" value="{{ staff.name }}" required></td>
-        </tr>
-        <tr>
-          <th><p>パスワード</p></th>
-          <td>
-            <input type="password" name="pass" id="pass" value="{{ staff.pass }}">
-            <input type="hidden" name="pass_old" id="pass" value="{{ staff.pass }}">
-          </td>
-        </tr>
-        <tr>
-          <th><p>パスワード（確認用）</p></th>
-          <td><input type="password" name="pass_confirm" id="pass_confirm" value="{{ staff.pass }}"></td>
-        </tr>
-      </table>
+    <div class="overTable">
+      <a href="{{url_for('admin.admin_staff')}}">
+        <button class="buttonAdmin">戻る</button>
+      </a>
     </div>
-    <div>
-      <button type="submit">変更</button>
-    </div>
-  </form>
 
-  <div>
-    <form action="/admin_staff_delete" method="post">
-      <input type="hidden" value="{{ staff.id }}" name="staff_id">
-      <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+    <form action="/admin_staff_update" method="post">
+      <div>
+        <table class="borderTable">
+          <tr>
+            <th><p>管理者ID</p></th>
+            <td>
+              <p>{{ staff.id }}</p>
+              <input type="hidden" name="staff_id" value="{{ staff.id }}">
+            </td>
+          </tr>
+          <tr>
+            <th><p>氏名</p></th>
+            <td><input type="text" name="staff_name" value="{{ staff.name }}" required></td>
+          </tr>
+          <tr>
+            <th><p>パスワード</p></th>
+            <td>
+              <input type="password" name="pass" id="pass" value="{{ staff.pass }}">
+              <input type="hidden" name="pass_old" id="pass" value="{{ staff.pass }}">
+            </td>
+          </tr>
+          <tr>
+            <th><p>パスワード（確認用）</p></th>
+            <td><input type="password" name="pass_confirm" id="pass_confirm" value="{{ staff.pass }}"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="changeBtnAdmin">
+        <button type="submit" class="buttonAdmin">変更する</button>
+      </div>
     </form>
+
+    <div class="deleteBtnAdmin">
+      <form action="/admin_staff_delete" method="post">
+        <input type="hidden" value="{{ staff.id }}" name="staff_id">
+        <button type="submit" onclick="return confirm('本当に削除しますか？')" class="buttonAdmin buttonAdminRed">削除</button>
+      </form>
+    </div>    
+
   </div>
+</main>
 
 {% endblock %}

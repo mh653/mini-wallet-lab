@@ -5,6 +5,9 @@
   --gray1: #d9d9d9;
   --gray2: #aaa;
   --gray3: #666;
+  --gray4: #eee;
+  --blue: #D3E8EE;
+  --red: #c73537;
 }
 
 /* レイアウト */
@@ -25,11 +28,23 @@ main {
 }
 .contentsWrapper {
   width: 1000px;
-  margin: 0 auto;
+  margin: 0 auto 200px;
+}
+.contentsWrapperLg {
+  width: 1200px;
+  margin: 0 auto 200px;
+}
+.contentsWrapperMid {
+  width: 800px;
+  margin: 0 auto 200px;
 }
 .contentsWrapperMin {
   width: 500px;
   margin: 0 auto 200px;
+}
+.contentsWrapperSm {
+  width: 500px;
+  margin: 0 auto 100px;
 }
 
 /* 文字 */
@@ -91,6 +106,7 @@ button[disabled] {
 
 /* フォーム */
 input {
+  background-color: var(--white);
   border: 1px solid var(--black);
   border-radius: 2px;
   padding: 2px 4px;
@@ -108,11 +124,13 @@ input[type="checkbox"] {
 }
 select {
   border: 1px solid var(--black);
+  background-color: var(--white);
   border-radius: 2px;
   font-size: 14px;
   appearance: auto;
   -webkit-appearance: auto;
   -moz-appearance: auto;
+  cursor: pointer;
 }
 .shortInput {
   width: 150px;
@@ -122,6 +140,13 @@ select {
 }
 .semiLongInput {
   width: 300px;
+}
+textarea {
+  background-color: var(--white);
+  border: 1px solid var(--black);
+  border-radius: 2px;
+  padding: 2px 4px;
+  font-size: 14px;
 }
 
 
@@ -142,6 +167,13 @@ header .top {
   justify-content: space-between;
   align-items: center;
   background-color: var(--white);
+}
+header .topAdmin {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 header .storeName {
   font-size: 16px;
@@ -213,6 +245,9 @@ header .bottom {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+header .bottomAdmin {
+  background-color: var(--blue);
 }
 header .menu3 {
   display: flex;
@@ -636,7 +671,7 @@ footer small {
 /* ログイン成功画面、ログアウト画面、購入完了画面 */
 .result {
   width: 400px;
-  margin: 0 auto;
+  margin: 0 auto 100px;
   text-align: center;
 }
 .result h2 {
@@ -698,6 +733,156 @@ footer small {
     transform: rotate(360deg);
   }
 }
+
+/* 管理者画面 */
+table {
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  line-height: 1.4em;
+}
+th {
+  padding-right: 20px;
+  font-weight: normal;
+}
+.overTable {
+  height: 30px;
+  margin-bottom: 10px;
+}
+/* 枠付きテーブル */
+.borderTable {
+  border-collapse: collapse;
+  width:100%;
+}
+.borderTable th,
+.borderTable td{
+  border:1px solid var(--black);
+  padding:8px 12px;
+  text-align:left;
+}
+.borderTable th{
+  padding-right: 0;
+  background:var(--gray1);
+  font-weight: bold;
+}
+.borderTable tr:nth-child(odd){
+  background:var(--gray4);
+}
+.borderTable .right{
+  text-align: right;
+}
+/* ボタン */
+.buttonAdmin {
+  height: 28px;
+  padding: 2px 10px;
+  border: 1px solid var(--black);
+  background-color: var(--black);
+  color: var(--white);
+  border-radius: 5px;
+  font-size: 12px;
+}
+.changeBtnAdmin {
+  margin-top: 50px;
+  text-align: center;
+}
+.deleteBtnAdmin {
+  margin-top: 30px;
+  text-align: right;
+}
+.buttonAdminRed {
+  background-color: var(--red);
+  border: 1px solid var(--red);
+}
+/* トップ */
+.adminTopInfo {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 20px 40px;
+  border: var(--black) 1px solid;
+}
+.adminTopInfo .date {
+  padding-bottom: 10px;
+}
+/* 注文情報 */
+.orderBar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.orderFilter {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.orderFilter:hover {
+  opacity: 0.5;
+}
+.prosessingSelect {
+  margin-right: 5px;
+}
+.oid {
+  width: 100px;
+}
+.odate {
+  width: 140px;
+}
+.oname {
+  width: 150px;
+}
+.opay {
+  width: 180px;
+}
+.ost {
+  width: 240px;
+}
+/* 商品情報 */
+.pid {
+  width: 80px;
+}
+.pname {
+  width: 300px;
+}
+.pprice {
+  width: 100px;
+}
+.pstock {
+  width: 100px;
+}
+.pstatus {
+  width: 100px;
+}
+/* 商品登録 */
+.productTable th{
+  width: 200px;
+}
+.productTable input[type="text"]{
+  width: 400px;
+}
+.productTable
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0;
+}
+.productTable select{
+  width: 200px;
+}
+.productTable textarea{
+  width: 600px;
+  height: 100px;
+}
+.productTable .imageThumb {
+  margin-bottom: 10px;
+}
+
+/* 注文明細 */
+.odMain {
+  margin: 20px;
+}
+.orderDetail {
+  width: 800px;
+  padding: 20px;
+  border: var(--black) 1px solid;
+}
+
+
 
 
 /* 縮小表示 */
