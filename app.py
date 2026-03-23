@@ -28,9 +28,9 @@ app.register_blueprint(admin_bp)
 # 全ページ共通
 @app.context_processor
 def inject_user():
-    # cookieからユーザ名を取得。存在しない場合はNoneが格納される
-    user_name = request.cookies.get("user_name")
-    return dict(user_name=user_name)
+  # cookieからユーザIDを取得。存在しない場合はNoneが格納される
+  user_id = request.cookies.get("user_id")
+  return dict(user_id=user_id)
 
 
 # ==============================
@@ -38,12 +38,12 @@ def inject_user():
 # ==============================
 @app.route("/")
 def index():
-    # HOME画面を表示
-    return render_template("index.html")
+  # HOME画面を表示
+  return render_template("index.html")
 
 
 # ==============================
 # アプリケーション実行
 # ==============================
 if __name__ == "__main__":
-    app.run(host="localhost", port=5000, debug=True)
+  app.run(host="localhost", port=5000, debug=True)

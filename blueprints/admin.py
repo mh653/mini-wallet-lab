@@ -32,7 +32,7 @@ def admin_login_process():
     err_msg = "管理者ID　または　パスワードが未入力です"
     return render_template("pages/error.html", err_msg=err_msg)
 
-  # SELECTを作成
+  # SQLを作成
   sql = "SELECT id,pass,name FROM t_admin"
   sql = (
     sql + " WHERE id = '" + str(admin_id) + "';"
@@ -469,7 +469,7 @@ def admin_staff_delete():
     response = make_response(redirect("/admin_staff"))
     return response
   else:
-    # SELECTを作成
+    # SQLを作成
     sql = """
     DELETE FROM t_admin
     WHERE id=%s
@@ -546,7 +546,7 @@ def admin_product_insert():
   search_key = request.form.get("search_key")
   is_active = request.form.get("is_active")
 
-  # SELECTを作成
+  # SQLを作成
   sql = """
   INSERT INTO t_product(
     name,
@@ -654,7 +654,7 @@ def admin_product_update():
   search_key = request.form.get("search_key")
   is_active = request.form.get("is_active")
 
-  # SELECTを作成
+  # SQLを作成
   sql = """
   UPDATE t_product
   SET
@@ -732,7 +732,7 @@ def admin_product_delete():
 
   product_id = request.form.get("product_id")
 
-  # SELECTを作成
+  # SQLを作成
   sql = """
   DELETE FROM t_product
   WHERE id=%s

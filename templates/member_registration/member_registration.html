@@ -3,7 +3,7 @@
   <div class="contentsWrapperMin">
     <h1>新規会員登録</h1>
 
-    <form action="/member_registration_success" method="post">
+    <form action="/member_registration_add" method="post">
       <div class="memberRegistInfo">
         <p><label for="mail">メールアドレス：</label></p>
         <input type="email" id="mail" name="mail" required />
@@ -28,11 +28,11 @@
 
         <p>性別：</p>
         <div>
-          <input type="radio" id="man" name="gender" value="1" />
+          <input type="radio" id="man" name="gender" value="1" required/>
           <label for="man">男性</label>
-          <input type="radio" id="woman" name="gender" value="2" />
+          <input type="radio" id="woman" name="gender" value="2" required/>
           <label for="woman">女性</label>
-          <input type="radio" id="other" name="gender" value="3" />
+          <input type="radio" id="other" name="gender" value="3" required/>
           <label for="other">その他（回答しない）</label>
         </div>
 

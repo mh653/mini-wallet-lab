@@ -6,14 +6,22 @@
   --gray2: #aaa;
   --gray3: #666;
 }
+
+/* レイアウト */
+html,body{
+  height:100%;
+}
 body {
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
   font-family: "Noto Sans JP", sans-serif;
   background-color: var(--white);
-  color: var(--black);
+  color: var(--black); 
 }
 main {
+  flex:1;
   margin-top: 75px;
-  min-height: 600px;
 }
 .contentsWrapper {
   width: 1000px;
@@ -23,6 +31,8 @@ main {
   width: 500px;
   margin: 0 auto 200px;
 }
+
+/* 文字 */
 h1 {
   font-size: 40px;
   padding-top: 50px;
@@ -34,7 +44,6 @@ h1 {
 }
 .h1Caption {
   text-align: center;
-  /* color: var(--gray3); */
   padding-bottom: 70px;
 }
 h2 {
@@ -49,6 +58,14 @@ p {
   letter-spacing: 0.03em;
   line-height: 1.4em;
 }
+.upperCase {
+  text-transform: uppercase;
+}
+a:hover {
+  opacity: 0.5;
+}
+
+/* ボタン */
 button {
   padding: 8px 15px;
   border: 1px solid var(--black);
@@ -65,6 +82,14 @@ button {
   justify-content: center;
   gap: 40px;
 }
+button:hover {
+  opacity: 0.5;
+}
+button[disabled] {
+  opacity: 0.5;
+}
+
+/* フォーム */
 input {
   border: 1px solid var(--black);
   border-radius: 2px;
@@ -98,22 +123,10 @@ select {
 .semiLongInput {
   width: 300px;
 }
-.upperCase {
-  text-transform: uppercase;
-}
-button:hover {
-  opacity: 0.5;
-}
-button[disabled] {
-  opacity: 0.5;
-}
-a:hover {
-  opacity: 0.5;
-}
+
 
 /* ヘッダー */
 header {
-  /* height: 100px; */
   position: fixed;
   top: 0;
   left: 0;
@@ -656,7 +669,7 @@ footer small {
   text-align: center;
 }
 
-/* ローディング画面 */
+/* ローディング */
 #loading {
   position: fixed;
   top: 0;
@@ -685,3 +698,41 @@ footer small {
     transform: rotate(360deg);
   }
 }
+
+
+/* 縮小表示 */
+body{
+  zoom:1;
+}
+@media (max-width:1400px){
+  body{
+    zoom:0.9;
+  }
+}
+@media (max-width:1200px){
+  body{
+    zoom:0.8;
+  }
+}
+@media (max-width:1000px){
+  body{
+    zoom:0.7;
+  }
+}
+@media (max-width:800px){
+  body{
+    zoom:0.6;
+  }
+}
+@media (max-width:600px){
+  body{
+    zoom:0.5;
+  }
+}
+@media (max-width:400px){
+  body{
+    zoom:0.3;
+  }
+}
+
+
