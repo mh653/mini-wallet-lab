@@ -6,70 +6,75 @@
 
       {% if user_info %}
         <h2>＜会員情報＞</h2>
-          <table>
-            <tr>
-              <th><p>メールアドレス</p></th>
-              <td><p>{{ user_info.id }}</p></td>
-            </tr>
-            <tr>
-              <th><p>氏名</p></th>
-              <td><p>{{ user_info.name }} 様</p></td>
-            </tr>
-            <tr>
-              <th><p>生年月日</p></th>
-              <td><p>{{ user_info.birthday_str }}</p></td>
-            </tr>
-            <tr>
-              <th><p>性別</p></th>
-              <td><p>{{ user_info.gender_str }}</p></td>
-            </tr>
-            <tr>
-              <th><p>電話番号</p></th>
-              <td><p>{{ user_info.tel }}</p></td>
-            </tr>
-            <tr>
-              <th><p>郵便番号</p></th>
-              <td><p>{{ user_info.zip }}</p></td>
-            </tr>
-            <tr>
-              <th><p>住所</p></th>
-              <td><p>{{ user_info.address1 }}</p></td>
-            </tr>
-            <tr>
-              <th></th>
-              <td><p>{{ user_info.address2 }}</p></td>
-            </tr>
-            <tr>
-              <th></th>
-              <td><p>{{ user_info.address3 }}</p></td>
-            </tr>
-            <tr>
-              <th><p>メールマガジン</p></th>
-              <td><p>{{ user_info.m_flag_str }}</p></td>
-            </tr>
-            <tr>
-              <th><p>パスワード</p></th>
-              <td><p>**************</p></td>
-            </tr>
-          </table>
+        <table class="noBorderTable">
+          <tr>
+            <th><p>メールアドレス</p></th>
+            <td><p>{{ user_info.id }}</p></td>
+          </tr>
+          <tr>
+            <th><p>氏名</p></th>
+            <td><p>{{ user_info.name }} 様</p></td>
+          </tr>
+          <tr>
+            <th><p>生年月日</p></th>
+            <td><p>{{ user_info.birthday_str }}</p></td>
+          </tr>
+          <tr>
+            <th><p>性別</p></th>
+            <td><p>{{ user_info.gender_str }}</p></td>
+          </tr>
+          <tr>
+            <th><p>電話番号</p></th>
+            <td><p>{{ user_info.tel }}</p></td>
+          </tr>
+          <tr>
+            <th><p>郵便番号</p></th>
+            <td><p>{{ user_info.zip }}</p></td>
+          </tr>
+          <tr>
+            <th><p>住所</p></th>
+            <td><p>{{ user_info.address1 }}</p></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><p>{{ user_info.address2 }}</p></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td><p>{{ user_info.address3 }}</p></td>
+          </tr>
+          <tr>
+            <th><p>メールマガジン</p></th>
+            <td><p>{{ user_info.m_flag_str }}</p></td>
+          </tr>
+          <tr>
+            <th><p>パスワード</p></th>
+            <td><p>**************</p></td>
+          </tr>
+        </table>
 
-        <div>
-          <a href="{{url_for('mypage.member_edit')}}">
-            <button>会員情報を変更する</button>
-          </a>
-        </div>
+      <div class="mypageGap">
+        <a href="{{url_for('mypage.member_edit')}}">
+          <button>会員情報を変更する</button>
+        </a>
+      </div>          
+
+
 
         <h2>＜購入履歴＞</h2>
         {% if orders %} 
           {% for o in orders %}
             <div class="orderHistory">
-              <p>受注番号: {{ "%06d"|format(o.id) }}</p>
-              <p>ご注文日: {{ o.order_date_str }}</p>
-              <p>ステータス: {{ o.processing }}</p>
-
-              <a href="{{url_for('mypage.mypage_order_detail', order_id=o.id)}}" target="_blank">
-                <button>注文明細</button>
-              </a>
+              <div>
+                <p>受注番号　： {{ "%06d"|format(o.id) }}</p>
+                <p>ご注文日　： {{ o.order_date_str }}</p>
+                <p>ステータス： {{ o.processing }}</p>                
+              </div>
+              <div>
+                <a href="{{url_for('mypage.mypage_order_detail', order_id=o.id)}}" target="_blank">
+                  <button>ご注文明細</button>
+                </a>                
+              </div>
             </div>
           {% endfor %}
         {% else %}

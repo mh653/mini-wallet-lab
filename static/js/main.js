@@ -39,7 +39,7 @@ function filterColor(color) {
 // 検索ボックス
 function toggleInvisible() {
   const searchBox = document.querySelector(".searchBox");
-  searchBox.classList.toggle("invisible");
+  searchBox.classList.toggle("show");
 }
 
 

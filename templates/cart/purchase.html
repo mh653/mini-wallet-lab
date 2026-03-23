@@ -3,7 +3,7 @@
   <div class="contentsWrapperMin">
     <h1>購入画面</h1>
 
-    <h2>＜購入内容＞</h2>
+    <h2>＜ご購入内容＞</h2>
 
     <div class="cartWrapper">
       {% for p in cart_items %}
@@ -179,8 +179,10 @@
 
       {% endif %}
 
+      <h2>＜お支払情報＞</h2>
       <div class="payment">
-        <p><label for="payment">支払方法：</label></p>
+        
+        <p><label for="payment">お支払方法：</label></p>
         <select id="payment" name="payment" class="middleInput">
           <option value="1">クレジットカード</option>
           <option value="2">電子決済</option>

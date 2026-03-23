@@ -14,7 +14,7 @@
     <div>
       <table class="borderTable">
         <tr>
-          <th>商品ID</th>
+          <th>商品番号</th>
           <th>商品名</th>
           <th>価格</th>
           <th>在庫数</th>
@@ -24,7 +24,7 @@
 
         {% for p in products %}
         <tr>
-          <td class="pid right">{{ p.id }}</td>
+          <td class="pid right">{{ "%05d"|format(p.id) }}</td>
           <td class="pname">{{ p.name }}</td>
           <td class="pprice right">{{ "{:,}".format(p.price) }} 円</td>
           <td class="pstock right">{{ p.stock }} 個</td>

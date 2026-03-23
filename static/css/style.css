@@ -149,7 +149,6 @@ textarea {
   font-size: 14px;
 }
 
-
 /* ヘッダー */
 header {
   position: fixed;
@@ -210,9 +209,15 @@ header .menu1 .search {
 header .menu1 .search:hover {
   opacity: 0.5;
 }
-header .menu1 .invisible {
-  display: none;
+.searchBox{
+  opacity:0;
+  overflow:hidden;
+  transition:0.1s ease;
 }
+.searchBox.show{
+  opacity:1;
+}
+
 .searchInput {
   width: 200px;
   height: 30px;
@@ -403,7 +408,7 @@ footer small {
 }
 .productsSection {
   padding-top: 40px;
-  padding-bottom: 250px;
+  padding-bottom: 50px;
   display: grid;
   grid-template-columns: repeat(3, 300px);
   gap: 50px;
@@ -459,7 +464,7 @@ footer small {
 }
 .productDetailSection {
   padding-top: 40px;
-  padding-bottom: 250px;
+  padding-bottom: 50px;
   display: flex;
   gap: 120px;
 }
@@ -488,7 +493,6 @@ footer small {
 .productDetailSection input {
   width: 60px;
 }
-
 .productDetailSection .quantityCart {
   width: 300px;
   display: flex;
@@ -593,29 +597,31 @@ footer small {
   align-items: center;
   justify-content: center;
 }
-.memberInfo {
-  width: 300px;
-  padding-bottom: 70px;
-  display: grid;
-  grid-template-columns: 150px 150px;
-  gap: 10px;
-}
 .orderHistory {
   margin-bottom: 20px;
   padding: 10px;
-  width: 355px;
+  width: 400px;
   border: 1px solid var(--black);
+  display: flex;
+  justify-content: space-between;
 }
 .orderHistory p {
   padding-bottom: 10px;
 }
-.orderDetailInfo {
-  display: grid;
-  grid-template-columns: 200px 100px;
-  gap: 5px;
+.noBorderTable {
+  border-collapse: collapse;
+  width:400px;
+  border:1px solid var(--black);
+  padding: 10px;
 }
-.orderDetailInfo .quantity {
-  text-align: right;
+.noBorderTable th,
+.noBorderTable td{
+  padding:8px 12px;
+  text-align:left;
+}
+.mypageGap {
+  padding-top: 30px;
+  padding-bottom: 80px;
 }
 
 /* 店舗一覧 */
@@ -780,6 +786,14 @@ th {
   border-radius: 5px;
   font-size: 12px;
 }
+.btnAdminDummy {
+  border: 1px solid var(--gray3);
+  background-color: var(--gray3);
+}
+.btnAdminDummy:hover {
+  opacity: 1;
+  cursor: auto;
+}
 .changeBtnAdmin {
   margin-top: 50px;
   text-align: center;
@@ -793,6 +807,11 @@ th {
   border: 1px solid var(--red);
 }
 /* トップ */
+.adminTopP {
+  width: fit-content;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
 .adminTopInfo {
   width: fit-content;
   margin: 0 auto;
@@ -835,7 +854,7 @@ th {
 }
 /* 商品情報 */
 .pid {
-  width: 80px;
+  width: 90px;
 }
 .pname {
   width: 300px;

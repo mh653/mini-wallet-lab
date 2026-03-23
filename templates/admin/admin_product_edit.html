@@ -14,9 +14,9 @@
       <div>
         <table class="borderTable productTable">
           <tr>
-            <th>商品ID</th>
+            <th>商品番号</th>
             <td>
-              <p>{{ product.id }}</p>
+              <p>{{ "%05d"|format(product.id) }}</p>
               <input type="hidden" value="{{ product.id }}" name="product_id">
             </td>
           </tr>

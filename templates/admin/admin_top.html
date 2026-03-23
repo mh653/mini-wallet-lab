@@ -1,8 +1,9 @@
 {% extends "admin/admin_layout.html" %} {% block content %}
 <main>
-    <h1>管理者ページトップ</h1>
+  <div class="contentsWrapperMin">
+    <h1>管理者ページ</h1>
 
-    <!-- <p>メニューを選択してください。</p> -->
+    <p class="adminTopP">メニューを選択してください。</p>
 
     <div class="adminTopInfo">
       <p class="date">{{ today }}</p>
@@ -17,6 +18,9 @@
         </tr>
       </table>
     </div>
+
+  </div>
+
 
 </main>
 
