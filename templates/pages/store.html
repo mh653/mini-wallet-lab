@@ -7,12 +7,12 @@
 
     <div class="stores">
       {% for store in stores %}
-      <div class="store">
-        <h3>{{ store.name }}</h3>
-        <p>{{ store.address }}</p>
-        <p>TEL {{ store.tel }}</p>
-        <p>営業時間：{{ store.hours }}</p>
-      </div>
+        <div class="store">
+          <h3>{{ store.name }}</h3>
+          <p>{{ store.address }}</p>
+          <p>TEL {{ store.tel }}</p>
+          <p>営業時間：{{ store.hours }}</p>
+        </div>
       {% endfor %}
     </div>
   </div>

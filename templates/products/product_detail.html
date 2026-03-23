@@ -21,22 +21,22 @@
         <form action="/add_to_cart" method="GET">
           <div class="quantityCart">
             {% if product.stock > 0 %}
-            <p>
-              数量:
-              <input
-                type="number"
-                name="quantity"
-                value="1"
-                min="1"
-                max="{{product.stock}}"
-              />
-            </p>
-            <button type="submit">カートに入れる</button>
+              <p>
+                数量:
+                <input
+                  type="number"
+                  name="quantity"
+                  value="1"
+                  min="1"
+                  max="{{product.stock}}"
+                />
+              </p>
+              <button type="submit">カートに入れる</button>
 
             {% else %}
 
-            <p>数量: 在庫がありません</p>
-            <button disabled>カートに入れる</button>
+              <p>数量: 在庫がありません</p>
+              <button disabled>カートに入れる</button>
 
             {% endif %}
           </div>

@@ -4,28 +4,26 @@
 <main>
   <h1>「{{ search_text }}」の検索結果</h1>  
 
-        <div class="contentsWrapper">
+  <div class="contentsWrapper">
+    <section class="productsSection">
 
-            <section class="productsSection">
+      {% for product in products %}
+        <div class="productWrapper" data-series="{{product.series}}" data-color="{{product.color}}">
+          <a href="{{url_for('products.product_detail', product_id=product.id)}}">
+            <div class="productThumb">
+              <div class="imageWraper">
+                <img src="{{ url_for('static', filename=product.image_path) }}" alt="商品画像">                                
+              </div>
+              <p class="series">{{product.series}}</p>
+              <p class="color">{{product.color_detail}}</p>
+              <p class="price">￥{{ "{:,}".format(product.price) }}</p>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
 
-                {% for product in products %}
-                <div class="productWrapper" data-series="{{product.series}}" data-color="{{product.color}}">
-                    <a href="{{url_for('products.product_detail', product_id=product.id)}}">
-                        <div class="productThumb">
-                            <div class="imageWraper">
-                                <img src="{{ url_for('static', filename=product.image_path) }}" alt="商品画像">                                
-                            </div>
-                            <p class="series">{{product.series}}</p>
-                            <p class="color">{{product.color_detail}}</p>
-                            <p class="price">￥{{ "{:,}".format(product.price) }}</p>
-                        </div>
-                    </a>
-                </div>
-
-                {% endfor %}
-
-            </section>
+    </section>
+  </div>
 
 </main>
-
 {% endblock %}

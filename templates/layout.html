@@ -126,19 +126,16 @@
           </div>
           <div class="menu2">
             {% if user_id != None %}
-            <!-- <p>ログイン： {{ user_name }} 様</p> -->
-            <!-- postはformしかダメ。getならaタグでOK -->
-            <form action="/logout" method="post">
-              <button type="submit" name="btn" value="logout">
-                ログアウト
-              </button>
-            </form>
+              <!-- postはformしかダメ。getならaタグでOK -->
+              <form action="/logout" method="post">
+                <button type="submit" name="btn" value="logout">
+                  ログアウト
+                </button>
+              </form>
             {% else %}
-            <!-- <p>ゲスト 様</p>
-                        <p>ログインしていません</p> -->
-            <form action="/login" method="get">
-              <button type="submit" name="btn" value="login">ログイン</button>
-            </form>
+              <form action="/login" method="get">
+                <button type="submit" name="btn" value="login">ログイン</button>
+              </form>
             {% endif %}
             <form action="/admin_login" method="get">
               <button type="submit" name="btn" value="admin_login">
@@ -186,9 +183,9 @@
         </div>
 
         <div class="snsArea">
-          <div class="x">
+          <!-- <div class="x">
             <p>X</p>
-          </div>
+          </div> -->
           <div class="facebook">
             <svg
               viewBox="-5 0 20 20"

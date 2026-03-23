@@ -52,28 +52,6 @@
               <td><p>**************</p></td>
             </tr>
           </table>
-        <!-- <div class="memberInfo">
-          <p>メールアドレス</p>
-          <p>{{ user_info.id }}</p>
-          <p>氏名</p>
-          <p>{{ user_info.name }} 様</p>
-          <p>生年月日</p>
-          <p>{{ user_info.birthday_str }}</p>
-          <p>性別</p>
-          <p>{{ user_info.gender_str }}</p>
-          <p>電話番号</p>
-          <p>{{ user_info.tel }}</p>
-          <p>郵便番号</p>
-          <p>{{ user_info.zip }}</p>
-          <p>住所</p>
-          <p>{{ user_info.address1 }}</p>
-          <p></p>
-          <p>{{ user_info.address2 }}</p>
-          <p></p>
-          <p>{{ user_info.address3 }}</p>
-          <p>メールマガジン</p>
-          <p>{{ user_info.m_flag_str }}</p>
-        </div> -->
 
         <div>
           <a href="{{url_for('mypage.member_edit')}}">
@@ -98,8 +76,7 @@
           <p>購入履歴はありません</p>
         {% endif %}
       
-
-
+        
       {% else %}
 
         <h2>ログインしていません</h2>

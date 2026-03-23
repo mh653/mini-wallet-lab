@@ -7,11 +7,11 @@
 
     <div class="cartWrapper">
       {% for p in cart_items %}
-      <div class="cartItem">
-        <p class="name">{{ p.name }}</p>
-        <p class="quantity">数量: {{ p.qty }}</p>
-        <p class="subtotal">￥{{ "{:,}".format(p.subtotal) }}</p>
-      </div>
+        <div class="cartItem">
+          <p class="name">{{ p.name }}</p>
+          <p class="quantity">数量: {{ p.qty }}</p>
+          <p class="subtotal">￥{{ "{:,}".format(p.subtotal) }}</p>
+        </div>
       {% endfor %}
       <hr />
       <p class="total">
@@ -24,159 +24,158 @@
 
       <!-- 商品IDと数量 -->
       {% for p in cart_items %}
-      <input type="hidden" name="product_id" value="{{ p.id }}" />
-      <input type="hidden" name="quantity_{{ p.id }}" value="{{ p.qty }}" />
+        <input type="hidden" name="product_id" value="{{ p.id }}" />
+        <input type="hidden" name="quantity_{{ p.id }}" value="{{ p.qty }}" />
       {% endfor %} 
       
       {% if user_info %}
+        <input type="hidden" name="member_id" value="{{ user_info.id }}" />
+        <input type="hidden" name="orderer" value="{{ user_info.name }}" />
+        <input type="hidden" name="mail" value="{{ user_info.id }}" />
 
-      <input type="hidden" name="member_id" value="{{ user_info.id }}" />
-      <input type="hidden" name="orderer" value="{{ user_info.name }}" />
-      <input type="hidden" name="mail" value="{{ user_info.id }}" />
+        <div class="orderInfo">
+          <p>氏名：</p>
+          <p>{{user_info.name}} 様</p>
+          <p>メールアドレス：</p>
+          <p>{{user_info.id}}</p>
 
-      <div class="orderInfo">
-        <p>氏名：</p>
-        <p>{{user_info.name}} 様</p>
-        <p>メールアドレス：</p>
-        <p>{{user_info.id}}</p>
+          <p><label for="tel">電話番号：</label></p>
+          <input
+            type="text"
+            id="tel"
+            name="tel"
+            value="{{ user_info.tel }}"
+            required
+            class="middleInput"
+          />
+        </div>
 
-        <p><label for="tel">電話番号：</label></p>
-        <input
-          type="text"
-          id="tel"
-          name="tel"
-          value="{{ user_info.tel }}"
-          required
-          class="middleInput"
-        />
-      </div>
+        <h2>＜配送先情報＞</h2>
 
-      <h2>＜配送先情報＞</h2>
+        <div class="orderInfo">
+          <p><label for="zip">郵便番号：</label></p>
+          <input
+            type="text"
+            id="zip"
+            name="zip"
+            value="{{ user_info.zip }}"
+            required
+            class="shortInput"
+          />
 
-      <div class="orderInfo">
-        <p><label for="zip">郵便番号：</label></p>
-        <input
-          type="text"
-          id="zip"
-          name="zip"
-          value="{{ user_info.zip }}"
-          required
-          class="shortInput"
-        />
+          <p><label for="address">住所：</label></p>
+          <input
+            type="text"
+            id="address"
+            name="address1"
+            value="{{ user_info.address1 }}"
+            required
+          />
 
-        <p><label for="address">住所：</label></p>
-        <input
-          type="text"
-          id="address"
-          name="address1"
-          value="{{ user_info.address1 }}"
-          required
-        />
+          <p></p>
+          <input
+            type="text"
+            id="address2"
+            name="address2"
+            value="{{ user_info.address2 }}"
+            required
+            placeholder="番地"
+          />
 
-        <p></p>
-        <input
-          type="text"
-          id="address2"
-          name="address2"
-          value="{{ user_info.address2 }}"
-          required
-          placeholder="番地"
-        />
+          <p></p>
+          <input
+            type="text"
+            id="address3"
+            name="address3"
+            value="{{ user_info.address3 }}"
+            placeholder="マンション名以下（任意）"
+          />
 
-        <p></p>
-        <input
-          type="text"
-          id="address3"
-          name="address3"
-          value="{{ user_info.address3 }}"
-          placeholder="マンション名以下（任意）"
-        />
-
-        <p><label for="recipient">宛先者：</label></p>
-        <input
-          type="text"
-          id="recipient"
-          name="recipient"
-          value="{{ user_info.name }}"
-          required
-          class="semiLongInput"
-        />
-      </div>
+          <p><label for="recipient">宛先者：</label></p>
+          <input
+            type="text"
+            id="recipient"
+            name="recipient"
+            value="{{ user_info.name }}"
+            required
+            class="semiLongInput"
+          />
+        </div>
 
       {% else %}
 
-      <input type="hidden" id="member_id" name="member_id" value="" />
+        <input type="hidden" id="member_id" name="member_id" value="" />
 
-      <div class="orderInfo">
-        <p><label for="orderer">氏名：</label></p>
-        <input
-          type="text"
-          id="orderer"
-          name="orderer"
-          value=""
-          required
-          class="semiLongInput"
-        />
+        <div class="orderInfo">
+          <p><label for="orderer">氏名：</label></p>
+          <input
+            type="text"
+            id="orderer"
+            name="orderer"
+            value=""
+            required
+            class="semiLongInput"
+          />
 
-        <p><label for="mail">メールアドレス：</label></p>
-        <input type="email" id="mail" name="mail" value="" required />
+          <p><label for="mail">メールアドレス：</label></p>
+          <input type="email" id="mail" name="mail" value="" required />
 
-        <p><label for="tel">電話番号：</label></p>
-        <input
-          type="text"
-          id="tel"
-          name="tel"
-          value=""
-          required
-          class="middleInput"
-        />
-      </div>
+          <p><label for="tel">電話番号：</label></p>
+          <input
+            type="text"
+            id="tel"
+            name="tel"
+            value=""
+            required
+            class="middleInput"
+          />
+        </div>
 
-      <h2>＜配送先情報＞</h2>
+        <h2>＜配送先情報＞</h2>
 
-      <div class="orderInfo">
-        <p><label for="zip">郵便番号：</label></p>
-        <input
-          type="text"
-          id="zip"
-          name="zip"
-          value=""
-          required
-          class="shortInput"
-        />
+        <div class="orderInfo">
+          <p><label for="zip">郵便番号：</label></p>
+          <input
+            type="text"
+            id="zip"
+            name="zip"
+            value=""
+            required
+            class="shortInput"
+          />
 
-        <p><label for="address">住所：</label></p>
-        <input type="text" id="address" name="address1" value="" required />
+          <p><label for="address">住所：</label></p>
+          <input type="text" id="address" name="address1" value="" required />
 
-        <p></p>
-        <input
-          type="text"
-          id="address2"
-          name="address2"
-          value=""
-          required
-          placeholder="番地"
-        />
+          <p></p>
+          <input
+            type="text"
+            id="address2"
+            name="address2"
+            value=""
+            required
+            placeholder="番地"
+          />
 
-        <p></p>
-        <input
-          type="text"
-          id="address3"
-          name="address3"
-          value=""
-          placeholder="マンション名以下（任意）"
-        />
+          <p></p>
+          <input
+            type="text"
+            id="address3"
+            name="address3"
+            value=""
+            placeholder="マンション名以下（任意）"
+          />
 
-        <p><label for="recipient">宛先者：</label></p>
-        <input
-          type="text"
-          id="recipient"
-          name="recipient"
-          value=""
-          required
-          class="semiLongInput"
-        />
-      </div>
+          <p><label for="recipient">宛先者：</label></p>
+          <input
+            type="text"
+            id="recipient"
+            name="recipient"
+            value=""
+            required
+            class="semiLongInput"
+          />
+        </div>
 
       {% endif %}
 
@@ -194,7 +193,9 @@
           購入する
         </button>
       </div>
+
     </form>
+    
   </div>
 </main>
 {% endblock %}
