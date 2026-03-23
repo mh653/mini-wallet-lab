@@ -286,7 +286,7 @@ footer .menuArea {
   gap: 150px;
 }
 footer li {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.6em;
 }
 footer .snsArea {
@@ -318,6 +318,7 @@ footer .instagram svg {
   height: 35px;
 }
 footer small {
+  padding-bottom: 10px;
   font-size: 11px;
   color: var(--white);
 }
