@@ -1,5 +1,4 @@
 Flask
 gunicorn
 mysql-connector-python
-PyMySQL
 cryptography

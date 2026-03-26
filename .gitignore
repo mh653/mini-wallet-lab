@@ -1,0 +1,3 @@
+# AivenにDBをアップロードするために作成したPthonファイル
+# コマンドプロンプトからこのファイルを実行し、db_mwl.sqlの内容をAivenのdefaultdbにコピーした
+import_db.py
