@@ -46,9 +46,9 @@ def index():
 # ==============================
 # アプリケーション実行
 # ==============================
-if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=int(os.environ.get("PORT",5000)))
-
-# # 開発環境用
 # if __name__ == "__main__":
-#   app.run(host="localhost", port=5000, debug=True)
+#   app.run(host="0.0.0.0", port=int(os.environ.get("PORT",5000)))
+
+# 開発環境用
+if __name__ == "__main__":
+  app.run(host="localhost", port=5000, debug=True)

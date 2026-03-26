@@ -1,5 +1,3 @@
-console.log("main.js loaded");
-
 // ---------------------------------------
 // ローディング
 // ---------------------------------------
@@ -48,19 +46,26 @@ function toggleInvisible() {
 // ---------------------------------------
 
 // 登録商品画像プレビュー
-document.getElementById("img_file").addEventListener("change", function(e){
-  const file = e.target.files[0]
-  if(file){
-    const reader = new FileReader()
-    reader.onload = function(event){
-      document.getElementById("img_preview").src = event.target.result
-      // 表示切替
-      document.getElementById("img_preview").style.display="block";
-      document.getElementById("current_img").style.display="none";
+const imgFile = document.getElementById("img_file");
+if(imgFile){
+  imgFile.addEventListener("change", function(e){
+    const file = e.target.files[0]
+    if(file){
+      const reader = new FileReader()
+      reader.onload = function(event){
+        const preview = document.getElementById("img_preview");
+        preview.src = event.target.result
+        preview.style.display="block";
+
+        const current = document.getElementById("current_img")    
+        if(current){
+          current.style.display="none";
+        }
+      }
+      reader.readAsDataURL(file)
     }
-    reader.readAsDataURL(file)
-  }
-})
+  })
+}
 
 // 注文情報絞り込み
 function filterProsessing(processing) {
