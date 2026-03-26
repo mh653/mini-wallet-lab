@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-import mysql.connector
+from db import connect_db
 
 # Blueprint名はproducts
 products_bp = Blueprint("products", __name__)
@@ -67,24 +67,3 @@ def product_detail(product_id):
 
   return render_template("products/product_detail.html", product=product)
 
-# ==============================
-# DB接続
-# ==============================
-def connect_db():
-
-  if os.environ.get("MYSQLHOST"):
-    return mysql.connector.connect(
-      host=os.environ.get("MYSQLHOST"),
-      port=int(os.environ.get("MYSQLPORT")),
-      user=os.environ.get("MYSQLUSER"),
-      passwd=os.environ.get("MYSQLPASSWORD"),
-      db=os.environ.get("MYSQLDATABASE")
-    )
-
-  else:
-    return mysql.connector.connect(
-      host="localhost",
-      user="root",
-      passwd="",
-      db="db_mini_wallet_lab"
-    )

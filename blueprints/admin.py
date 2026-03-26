@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request, make_response, redirect
 from datetime import datetime
-import mysql.connector
 import os
 import glob
 from flask import flash
+from db import connect_db
 
 # Blueprint名はadmin
 admin_bp = Blueprint("admin", __name__)
@@ -759,25 +759,3 @@ def admin_product_delete():
   # リダイレクト
   response = make_response(redirect("/admin_product"))
   return response
-
-# ==============================
-# DB接続
-# ==============================
-def connect_db():
-
-  if os.environ.get("MYSQLHOST"):
-    return mysql.connector.connect(
-      host=os.environ.get("MYSQLHOST"),
-      port=int(os.environ.get("MYSQLPORT")),
-      user=os.environ.get("MYSQLUSER"),
-      passwd=os.environ.get("MYSQLPASSWORD"),
-      db=os.environ.get("MYSQLDATABASE")
-    )
-
-  else:
-    return mysql.connector.connect(
-      host="localhost",
-      user="root",
-      passwd="",
-      db="db_mini_wallet_lab"
-    )

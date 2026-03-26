@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, make_response, redirect
-import mysql.connector
+from db import connect_db
 
 # Blueprint名はmember_registration
 member_registration_bp = Blueprint("member_registration", __name__)
@@ -102,24 +102,3 @@ def member_registration_success():
 	# 会員登録完了画面出力
 	return render_template("member_registration/member_registration_success.html")
 
-# ==============================
-# DB接続
-# ==============================
-def connect_db():
-
-  if os.environ.get("MYSQLHOST"):
-    return mysql.connector.connect(
-      host=os.environ.get("MYSQLHOST"),
-      port=int(os.environ.get("MYSQLPORT")),
-      user=os.environ.get("MYSQLUSER"),
-      passwd=os.environ.get("MYSQLPASSWORD"),
-      db=os.environ.get("MYSQLDATABASE")
-    )
-
-  else:
-    return mysql.connector.connect(
-      host="localhost",
-      user="root",
-      passwd="",
-      db="db_mini_wallet_lab"
-    )
