@@ -45,10 +45,29 @@ def index():
 
 # ==============================
 # アプリケーション実行
+# ※環境変数で切り替え
 # ==============================
+if __name__ == "__main__":
+  
+  # 本番環境
+  if os.environ.get("PORT"):
+    app.run(
+      host="0.0.0.0",
+      port=int(os.environ.get("PORT"))
+    )
+  # 開発環境
+  else:
+    app.run(
+      host="localhost",
+      port=5000,
+      debug=True
+    )
+
+
+
 # if __name__ == "__main__":
 #   app.run(host="0.0.0.0", port=int(os.environ.get("PORT",5000)))
 
-# 開発環境用
-if __name__ == "__main__":
-  app.run(host="localhost", port=5000, debug=True)
+# # 開発環境用
+# if __name__ == "__main__":
+#   app.run(host="localhost", port=5000, debug=True)
