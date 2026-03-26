@@ -7,7 +7,7 @@
   --gray3: #666;
   --gray4: #eee;
   --blue: #D3E8EE;
-  --red: #c73537;
+  --red: #ff3f42;
 }
 
 /* レイアウト */
@@ -580,6 +580,11 @@ footer small {
 }
 .toMemberRegistrationBtn button {
   width: 150px;
+}
+.loginCaption {
+  text-align: center;
+  padding-bottom: 30px;
+  color: var(--red);
 }
 
 /* 新規会員登録 */
