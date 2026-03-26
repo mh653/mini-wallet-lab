@@ -362,6 +362,20 @@ def purchase_success():
 # DB接続
 # ==============================
 def connect_db():
-  return mysql.connector.connect(
-    host="localhost", user="root", passwd="", db="db_mini_wallet_lab"
-  )
+
+  if os.environ.get("MYSQLHOST"):
+    return mysql.connector.connect(
+      host=os.environ.get("MYSQLHOST"),
+      port=int(os.environ.get("MYSQLPORT")),
+      user=os.environ.get("MYSQLUSER"),
+      passwd=os.environ.get("MYSQLPASSWORD"),
+      db=os.environ.get("MYSQLDATABASE")
+    )
+
+  else:
+    return mysql.connector.connect(
+      host="localhost",
+      user="root",
+      passwd="",
+      db="db_mini_wallet_lab"
+    )
